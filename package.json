@@ -1,0 +1,18 @@
+{
+  "name": "spbot",
+  "version": "1.0.0",
+  "description": "SPBot Server",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "Joyce Echessa",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mongoose": "^4.6.2",
+    "request": "^2.75.0"
+  }
+}
