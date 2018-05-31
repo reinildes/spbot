@@ -106,7 +106,12 @@ function processMessage(event) {
                 case "rating":
                     //getMovieDetail(senderId, formattedMsg);
                     break;
-
+                case "reclamacao":
+                digaIdade(senderId);
+                    break;
+                case "idade":
+                    digaIdade(senderId);
+                    break;
                 default:
                     findMovie(senderId, formattedMsg);
             }
@@ -114,6 +119,40 @@ function processMessage(event) {
             sendMessage(senderId, {text: "Sorry, I don't understand your request."});
         }
     }
+}
+
+function digaIdade(userId){
+    message = {
+        attachment: {
+            type: "template",
+            payload: {
+                template_type: "generic",
+                elements: [{
+                    title: "Idade",
+                    subtitle: "Me diz aí quantos anos vc tem?",
+                    image_url:"https://incrivel.club/criatividade-saude/diga-sua-idade-e-diremos-como-anda-seu-metabolismo-242910/",
+                    buttons: [{
+                        type: "postback",
+                        title: "20",
+                        payload: "20 anos"
+                    }, {
+                        type: "postback",
+                        title: "30",
+                        payload: "30 anos"
+                    }, {
+                        type: "postback",
+                        title: "40",
+                        payload: "40 anos"
+                    }, {
+                        type: "postback",
+                        title: "50",
+                        payload: "vish tu ja eh terceira idade"
+                    }]
+                }]
+            }
+        }
+    };
+    sendMessage(userId, message);
 }
 
 function findMovie(userId, movieTitle) {
