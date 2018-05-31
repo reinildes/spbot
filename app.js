@@ -132,7 +132,7 @@ function digaIdade(userId){
                 template_type: "generic",
                 elements: [{
                     title: "Idade",
-                    subtitle: "Me diz aí quantos anos vc tem?",
+                    subtitle: "Tell me your age?",
                     //image_url:"https://incrivel.club/criatividade-saude/diga-sua-idade-e-diremos-como-anda-seu-metabolismo-242910/",
                     buttons: [{
                         type: "postback",
