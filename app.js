@@ -1,10 +1,10 @@
 var express = require("express");
 var request = require("request");
 var bodyParser = require("body-parser");
-var mongoose = require("mongoose");
+//var mongoose = require("mongoose");
 
-var db = mongoose.connect(process.env.MONGODB_URI);
-var Movie = require("./models/movie");
+//var db = mongoose.connect(process.env.MONGODB_URI);
+//var Movie = require("./models/movie");
 
 var app = express();
 app.use(bodyParser.urlencoded({extended: false}));
@@ -104,7 +104,7 @@ function processMessage(event) {
                 case "director":
                 case "cast":
                 case "rating":
-                    getMovieDetail(senderId, formattedMsg);
+                //    getMovieDetail(senderId, formattedMsg);
                     break;
 
                 default:
@@ -134,7 +134,7 @@ function findMovie(userId, movieTitle) {
                     poster_url:movieObj.Poster
                 };
                 var options = {upsert: true};
-                Movie.findOneAndUpdate(query, update, options, function(err, mov) {
+               /* Movie.findOneAndUpdate(query, update, options, function(err, mov) {
                     if (err) {
                         console.log("Database error: " + err);
                     } else {
@@ -162,7 +162,7 @@ function findMovie(userId, movieTitle) {
                         };
                         sendMessage(userId, message);
                     }
-                });
+                });*/
             } else {
                 console.log(movieObj.Error);
                 sendMessage(userId, {text: movieObj.Error});
@@ -172,7 +172,7 @@ function findMovie(userId, movieTitle) {
         }
     });
 }
-
+/*
 function getMovieDetail(userId, field) {
     Movie.findOne({user_id: userId}, function(err, movie) {
         if(err) {
@@ -182,7 +182,7 @@ function getMovieDetail(userId, field) {
         }
     });
 }
-
+*/
 // sends message to user
 function sendMessage(recipientId, message) {
     request({
