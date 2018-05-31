@@ -104,7 +104,7 @@ function processMessage(event) {
                 case "director":
                 case "cast":
                 case "rating":
-                //    getMovieDetail(senderId, formattedMsg);
+                    //getMovieDetail(senderId, formattedMsg);
                     break;
 
                 default:
@@ -134,10 +134,10 @@ function findMovie(userId, movieTitle) {
                     poster_url:movieObj.Poster
                 };
                 var options = {upsert: true};
-               /* Movie.findOneAndUpdate(query, update, options, function(err, mov) {
-                    if (err) {
-                        console.log("Database error: " + err);
-                    } else {
+               // Movie.findOneAndUpdate(query, update, options, function(err, mov) {
+                //    if (err) {
+                  //      console.log("Database error: " + err);
+                   // } else {
                         message = {
                             attachment: {
                                 type: "template",
@@ -161,8 +161,8 @@ function findMovie(userId, movieTitle) {
                             }
                         };
                         sendMessage(userId, message);
-                    }
-                });*/
+                    //}
+              //  });
             } else {
                 console.log(movieObj.Error);
                 sendMessage(userId, {text: movieObj.Error});
