@@ -107,9 +107,11 @@ function processMessage(event) {
                     //getMovieDetail(senderId, formattedMsg);
                     break;
                 case "reclamacao":
+                console.log("rec");
                 digaIdade(senderId);
                     break;
                 case "idade":
+                console.log("idade");
                     digaIdade(senderId);
                     break;
                 default:
@@ -122,6 +124,7 @@ function processMessage(event) {
 }
 
 function digaIdade(userId){
+    console.log("diga idade");
     message = {
         attachment: {
             type: "template",
@@ -130,7 +133,7 @@ function digaIdade(userId){
                 elements: [{
                     title: "Idade",
                     subtitle: "Me diz aí quantos anos vc tem?",
-                    image_url:"https://incrivel.club/criatividade-saude/diga-sua-idade-e-diremos-como-anda-seu-metabolismo-242910/",
+                    //image_url:"https://incrivel.club/criatividade-saude/diga-sua-idade-e-diremos-como-anda-seu-metabolismo-242910/",
                     buttons: [{
                         type: "postback",
                         title: "20",
@@ -139,11 +142,7 @@ function digaIdade(userId){
                         type: "postback",
                         title: "30",
                         payload: "30 anos"
-                    }, {
-                        type: "postback",
-                        title: "40",
-                        payload: "40 anos"
-                    }, {
+                    },{
                         type: "postback",
                         title: "50",
                         payload: "vish tu ja eh terceira idade"
@@ -152,6 +151,7 @@ function digaIdade(userId){
             }
         }
     };
+    console.log("before send message");
     sendMessage(userId, message);
 }
 
@@ -224,6 +224,7 @@ function getMovieDetail(userId, field) {
 */
 // sends message to user
 function sendMessage(recipientId, message) {
+    console.log("before send message in");
     request({
         url: "https://graph.facebook.com/v2.6/me/messages",
         qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
@@ -237,4 +238,5 @@ function sendMessage(recipientId, message) {
             console.log("Error sending message: " + response.error);
         }
     });
+    console.log("before send message end");
 }
