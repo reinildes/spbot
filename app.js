@@ -29,7 +29,7 @@ app.get("/webhook", function (req, res) {
 });
 
 app.get("/datepicker", function(req, res){
-    res.send("Hello world");
+    res.sendFile("datepicker2.html")
 });
 
 // All callbacks for Messenger will be POST-ed here
