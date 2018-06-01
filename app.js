@@ -28,6 +28,10 @@ app.get("/webhook", function (req, res) {
     }
 });
 
+app.get("/datepicker", function(req, res){
+    return "Hello world";
+});
+
 // All callbacks for Messenger will be POST-ed here
 app.post("/webhook", function (req, res) {
     // Make sure this is a page subscription
@@ -101,6 +105,7 @@ function processMessage(event) {
                 case "plot":
                 case "date":
                 case "runtime":
+                dateF(senderId);
                 case "director":
                 case "cast":
                 case "rating":
@@ -121,6 +126,10 @@ function processMessage(event) {
             sendMessage(senderId, {text: "Sorry, I don't understand your request."});
         }
     }
+}
+
+function dateF(user){
+
 }
 
 function digaIdade(userId){
