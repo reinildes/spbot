@@ -108,7 +108,7 @@ function processMessage(event) {
                 case "idade":
                     digaIdade();
                 default:
-                    findMovie(senderId, formattedMsg);
+                    digaIdade(); // por enquanto
             }
         } else if (message.attachments) {
             sendMessage(senderId, {text: "Sorry, I don't understand your request."});
