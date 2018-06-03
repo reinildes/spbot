@@ -79,10 +79,8 @@ function processPostback(event) {
                 name = bodyObj.first_name;
                 greeting = "Oi " + name + ". ";
             }
-            var message = greeting + mensagemDeBoasVindas();
-            
-            //sendMessage(senderId, {text: message});
-            sendMessage(mensagemDeBoasVindas());
+            var message = greeting + "Seja bem vindo"
+            sendMessage(senderId, {text: message});
         });
     } else if (payload === "Correct") {
         sendMessage(senderId, {text: "Awesome! What would you like to find out? Enter 'plot', 'date', 'runtime', 'director', 'cast' or 'rating' for the various details."});
@@ -160,13 +158,13 @@ function mensagemDeBoasVindas(){
                         type: "postback",
                         title: "Não quero cuidar",
                         payload: "Não quero cuidar"
-                    }]
+                    }]  
                 }]
             }
         }
     };    
 
-    return message;
+    return mensagem;
 }
 
 function digaIdade(userId){
@@ -192,14 +190,6 @@ function digaIdade(userId){
                         type: "postback",
                         title: "50",
                         payload: "vish tu ja eh terceira idade"
-                    }, {
-                        type: "postback",
-                        title: "49",
-                        payload: "30 ano dds"
-                    },{
-                        type: "postback",
-                        title: "80",
-                        payload: "vish tu ja eh terceira idade dd"
                     }]
                 }]
             }
