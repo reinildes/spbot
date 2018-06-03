@@ -134,7 +134,7 @@ function sendMessage(recipientId, message) {
     console.log("before send message end");
 }
 
-//DAQUI PARA BAIXO FUNCÕES PARA O CHATBOT DO MEU PLANETA CUIDO EU
+//DAQUI PARA BAIXO FUNCÕES PARA O CHATBOT DO MEU PLANETA CUIDO EU   
 
 function mensagemDeBoasVindas(senderId){
     var msg = `acredito que você tomou uma excelente decisão hoje!
