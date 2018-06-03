@@ -108,7 +108,7 @@ function processMessage(event) {
                 case "idade":
                     digaIdade(senderId);
                 default:
-                    digaIdade(senderId); // por enquanto
+                    mensagemDeBoasVindas(senderId); // por enquanto
             }
         } else if (message.attachments) {
             sendMessage(senderId, {text: "Sorry, I don't understand your request."});
@@ -136,7 +136,7 @@ function sendMessage(recipientId, message) {
 
 //DAQUI PARA BAIXO FUNCÕES PARA O CHATBOT DO MEU PLANETA CUIDO EU
 
-function mensagemDeBoasVindas(){
+function mensagemDeBoasVindas(senderId){
     var msg = `acredito que você tomou uma excelente decisão hoje!
     Juntos cuidaremos do nosso planeta.
     Qual a sua contribuição?`;
@@ -164,7 +164,7 @@ function mensagemDeBoasVindas(){
         }
     };    
 
-    return mensagem;
+    sendMessage(senderId ,mensagem);
 }
 
 function digaIdade(userId){
