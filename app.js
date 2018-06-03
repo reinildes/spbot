@@ -120,7 +120,7 @@ function processMessage(event) {
                     digaIdade(senderId);
                     break;
                 case "data" :
-                sendMessage(userId, setRoomPreferences(senderId));
+                sendMessage(senderId, setRoomPreferences(senderId));
                 default:
                     findMovie(senderId, formattedMsg);
             }
