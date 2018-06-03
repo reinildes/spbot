@@ -116,6 +116,25 @@ function processMessage(event) {
     }
 }
 
+function sendMessage(recipientId, message) {
+    console.log("before send message in");
+    request({
+        url: "https://graph.facebook.com/v2.6/me/messages",
+        qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
+        method: "POST",
+        json: {
+            recipient: {id: recipientId},
+            message: message,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log("Error sending message: " + response.error);
+        }
+    });
+    console.log("before send message end");
+}
+
+//DAQUI PARA BAIXO FUNCÕES PARA O CHATBOT DO MEU PLANETA CUIDO EU
 
 function digaIdade(userId){
     console.log("diga idade");
@@ -140,6 +159,14 @@ function digaIdade(userId){
                         type: "postback",
                         title: "50",
                         payload: "vish tu ja eh terceira idade"
+                    }, {
+                        type: "postback",
+                        title: "30",
+                        payload: "30 anos"
+                    },{
+                        type: "postback",
+                        title: "50",
+                        payload: "vish tu ja eh terceira idade"
                     }]
                 }]
             }
@@ -149,23 +176,6 @@ function digaIdade(userId){
     sendMessage(userId, message);
 }
 
-function sendMessage(recipientId, message) {
-    console.log("before send message in");
-    request({
-        url: "https://graph.facebook.com/v2.6/me/messages",
-        qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
-        method: "POST",
-        json: {
-            recipient: {id: recipientId},
-            message: message,
-        }
-    }, function(error, response, body) {
-        if (error) {
-            console.log("Error sending message: " + response.error);
-        }
-    });
-    console.log("before send message end");
-}
 
 
 app.get('/datepicker', (req, res, next) => {
