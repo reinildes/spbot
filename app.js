@@ -287,7 +287,7 @@ function setRoomPreferences(sender_psid) {
                 buttons: [{
                     type: "web_url",
                     url: "https://raychat.herokuapp.com/datepickers",
-                    title: "Set preferences",
+                    title: "Escolher data",
                     webview_height_ratio: "compact",
                     messenger_extensions: true
                 }]
