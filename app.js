@@ -106,9 +106,9 @@ function processMessage(event) {
             // Otherwise search for new movie.
             switch (formattedMsg) {
                 case "idade":
-                    digaIdade();
+                    digaIdade(senderId);
                 default:
-                    digaIdade(); // por enquanto
+                    digaIdade(senderId); // por enquanto
             }
         } else if (message.attachments) {
             sendMessage(senderId, {text: "Sorry, I don't understand your request."});
