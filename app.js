@@ -56,6 +56,8 @@ app.post("/webhook", function (req, res) {
     }
 });
 
+var nome;
+
 function processPostback(event) {
     var senderId = event.sender.id;
     var payload = event.postback.payload;
@@ -77,6 +79,7 @@ function processPostback(event) {
             } else {
                 var bodyObj = JSON.parse(body);
                 name = bodyObj.first_name;
+                nome = name;
                 greeting = "Oi " + name + ". ";
             }
             var message = greeting + "Seja bem vindo"
@@ -137,7 +140,7 @@ function sendMessage(recipientId, message) {
 //DAQUI PARA BAIXO FUNCÕES PARA O CHATBOT DO MEU PLANETA CUIDO EU   
 
 function mensagemDeBoasVindas(senderId){
-    var msg = `acredito que você tomou uma excelente decisão hoje!
+    var msg = nome+ ` acredito que você tomou uma excelente decisão hoje!
     Juntos cuidaremos do nosso planeta.
     Qual a sua contribuição?`;
 
@@ -147,17 +150,17 @@ function mensagemDeBoasVindas(senderId){
             payload: {
                 template_type: "generic",
                 elements: [{
-                    title: "Contribuição",
+                    title: "Bem vindo",
                     subtitle: msg,
                     //image_url:"https://incrivel.club/criatividade-saude/diga-sua-idade-e-diremos-como-anda-seu-metabolismo-242910/",
                     buttons: [{
                         type: "postback",
                         title: "Fazer uma contribuição",
-                        payload: "Fazer uma contribuição"
+                        payload: "ser cidadao"
                     }, {
                         type: "postback",
                         title: "Não quero cuidar",
-                        payload: "Não quero cuidar"
+                        payload: "não cuidar"
                     }]  
                 }]
             }
