@@ -1,10 +1,6 @@
 var express = require("express");
 var request = require("request");
 var bodyParser = require("body-parser");
-//var mongoose = require("mongoose");
-
-//var db = mongoose.connect(process.env.MONGODB_URI);
-//var Movie = require("./models/movie");
 
 var app = express();
 app.use(bodyParser.urlencoded({extended: false}));
@@ -16,6 +12,13 @@ app.get("/", function (req, res) {
     res.send("Deployed!");
 });
 
+app.get("/idade", function (req, res){
+    perguntaIdade();
+});
+
+function perguntaIdade(){
+    res.send("Informe sua idade");
+}
 // Facebook Webhook
 // Used for verification
 app.get("/webhook", function (req, res) {
