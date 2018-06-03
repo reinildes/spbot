@@ -161,12 +161,12 @@ function digaIdade(userId){
                         payload: "vish tu ja eh terceira idade"
                     }, {
                         type: "postback",
-                        title: "30",
-                        payload: "30 anos"
+                        title: "49",
+                        payload: "30 ano dds"
                     },{
                         type: "postback",
-                        title: "50",
-                        payload: "vish tu ja eh terceira idade"
+                        title: "80",
+                        payload: "vish tu ja eh terceira idade dd"
                     }]
                 }]
             }
