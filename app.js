@@ -164,7 +164,7 @@ function mensagemDeBoasVindas(senderId){
         }
     };    
 
-    sendMessage(senderId ,mensagem);
+    sendMessage(senderId ,message);
 }
 
 function digaIdade(userId){
