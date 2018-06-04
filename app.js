@@ -114,9 +114,7 @@ function processMessage(event) {
                     break;
                 case "data":
 
-                    const msg = setRoomPreferences(senderId);
-                    console.log(msg);
-                    sendMessage(senderId, msg);
+                    setRoomPreferences(senderId);
                     break;
                 default:
                     mensagemDeBoasVindas(senderId); // por enquanto
@@ -150,7 +148,7 @@ function sendMessage(recipientId, message) {
 function mensagemDeBoasVindas(senderId){
     
     var msg = getUserName(senderId)+' Você fez uma excelente decisão hoje!';
-    sendMessage(senderId, msg);
+    sendMessage(senderId, {text: msg});
     
     var msg = 'Ajude-nos a cuidar do planeja';
     sendMessage(senderId, msg);
@@ -245,7 +243,8 @@ function setRoomPreferences(sender_psid) {
         }
     };
 
-    return response;
+    //return response;
+    callSendAPI(sender_psid, response);
 }
 
 // Sends response messages via the Send API
