@@ -117,7 +117,7 @@ function processMessage(event) {
                     const msg = setRoomPreferences(senderId);
                     console.log(msg);
                     sendMessage(senderId, msg);
-                    
+                    break;
                 default:
                     mensagemDeBoasVindas(senderId); // por enquanto
             }
