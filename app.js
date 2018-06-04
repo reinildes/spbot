@@ -236,7 +236,7 @@ function preparaWebView(sender_psid) {
                     type: "web_url",
                     url: "https://raychat.herokuapp.com/datepicker",
                     title: "Fazer reclamação",
-                    webview_height_ratio: "compact",
+                    webview_height_ratio: "full",
                     messenger_extensions: true
                 }]
             }
