@@ -61,6 +61,10 @@ var nome;
 function processPostback(event) {
     var senderId = event.sender.id;
     var payload = event.postback.payload;
+    var message = event.message;
+    console.log("Entering processPostback");
+    console.log("Received message from senderId: " + senderId);
+    console.log("Message is: " + JSON.stringify(message));
 
     if (payload === "Greeting") {
         // Get user's first name from the User Profile API
