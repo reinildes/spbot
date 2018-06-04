@@ -121,7 +121,10 @@ function processMessage(event) {
                     digaIdade(senderId);
                     break;
                 case "roon":
-                    sendMessage(senderId, setRoomPreferences(senderId));
+
+                    const msg = setRoomPreferences(senderId);
+                    console.log(msg);
+                    sendMessage(senderId, msg);
                     break;
                 default:
                     mensagemDeBoasVindas(senderId); // por enquanto
