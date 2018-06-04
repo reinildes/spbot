@@ -112,9 +112,8 @@ function processMessage(event) {
                 case "idade":
                     digaIdade(senderId);
                     break;
-                case "data":
-
-                    setRoomPreferences(senderId);
+                case "comeca":
+                    preparaWebView(senderId);
                     break;
                 default:
                     mensagemDeBoasVindas(senderId); // por enquanto
@@ -226,17 +225,17 @@ app.get('/datepicker', (req, res, next) => {
     }
 });
 
-function setRoomPreferences(sender_psid) {
+function preparaWebView(sender_psid) {
     message = {
         attachment: {
             type: "template",
             payload: {
                 template_type: "button",
-                text: "OK, let's set your room preferences so I won't need to ask for them in the future.",
+                text: "Obrigado por contribuir! Você gostaria de fazer uma reclamação?",
                 buttons: [{
                     type: "web_url",
                     url: "https://raychat.herokuapp.com/datepicker",
-                    title: "Set Preferences",
+                    title: "Fazer reclamação",
                     webview_height_ratio: "compact",
                     messenger_extensions: true
                 }]
