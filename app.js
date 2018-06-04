@@ -238,7 +238,7 @@ function setRoomPreferences(sender_psid) {
                     url: "https://raychat.herokuapp.com/datepicker",
                     title: "Set Preferences",
                     webview_height_ratio: "compact",
-                    messenger_extensions: false
+                    messenger_extensions: true
                 }]
             }
         }
