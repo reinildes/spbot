@@ -215,6 +215,7 @@ function digaIdade(userId){
 
 app.get('/datepicker', (req, res, next) => {
     let referer = req.get('Referer');
+    console.log(referer);
     if (referer) {
         if (referer.indexOf('www.messenger.com') >= 0) {
             res.setHeader('X-Frame-Options', 'ALLOW-FROM https://www.messenger.com/');
@@ -237,7 +238,7 @@ function setRoomPreferences(sender_psid) {
                     url: "https://raychat.herokuapp.com/datepicker",
                     title: "Set Preferences",
                     webview_height_ratio: "compact",
-                    messenger_extensions: true
+                    messenger_extensions: false
                 }]
             }
         }
