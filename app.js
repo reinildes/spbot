@@ -226,7 +226,7 @@ app.get('/datepicker', (req, res, next) => {
 });
 
 function setRoomPreferences(sender_psid) {
-    let response = {
+    message = {
         attachment: {
             type: "template",
             payload: {
@@ -244,7 +244,7 @@ function setRoomPreferences(sender_psid) {
     };
 
     //return response;
-    callSendAPI(sender_psid, response);
+    sendMessage(sender_psid, message);
 }
 
 // Sends response messages via the Send API
