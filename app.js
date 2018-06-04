@@ -66,7 +66,7 @@ function processPostback(event) {
     console.log("Received message from senderId: " + senderId);
     console.log("Message is: " + JSON.stringify(message));
 
-    if (payload === "Greeting") {
+    if (true/*payload === "Greeting"*/) {
         // Get user's first name from the User Profile API
         // and include it in the greeting
         request({
@@ -84,10 +84,12 @@ function processPostback(event) {
                 var bodyObj = JSON.parse(body);
                 name = bodyObj.first_name;
                 nome = name;
-                greeting = "Oi " + name + ". ";
+                greeting = "Oi " + name ;
             }
             var message = greeting + "Seja bem vindo"
             sendMessage(senderId, {text: message});
+            mensagemDeBoasVindas(senderId);
+
         });
     } else if (payload === "Correct") {
         sendMessage(senderId, {text: "Awesome! What would you like to find out? Enter 'plot', 'date', 'runtime', 'director', 'cast' or 'rating' for the various details."});
