@@ -11,14 +11,6 @@ app.listen((process.env.PORT || 5000));
 app.get("/", function (req, res) {
     res.send("Deployed!");
 });
-
-app.get("/idade", function (req, res){
-    perguntaIdade();
-});
-
-function perguntaIdade(){
-    res.send("Informe sua idade");
-}
 // Facebook Webhook
 // Used for verification
 app.get("/webhook", function (req, res) {
@@ -120,12 +112,12 @@ function processMessage(event) {
                 case "idade":
                     digaIdade(senderId);
                     break;
-                case "roon":
+                case "data":
 
                     const msg = setRoomPreferences(senderId);
                     console.log(msg);
                     sendMessage(senderId, msg);
-                    break;
+                    
                 default:
                     mensagemDeBoasVindas(senderId); // por enquanto
             }
@@ -244,8 +236,8 @@ function setRoomPreferences(sender_psid) {
                 text: "OK, let's set your room preferences so I won't need to ask for them in the future.",
                 buttons: [{
                     type: "web_url",
-                    url: "https://raychat.herokuapp.com/datepickers",
-                    title: "Escolher data",
+                    url: "https://raychat.herokuapp.com/datepicker",
+                    title: "Set Preferences",
                     webview_height_ratio: "compact",
                     messenger_extensions: true
                 }]
