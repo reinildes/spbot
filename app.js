@@ -56,8 +56,6 @@ app.post("/webhook", function (req, res) {
     }
 });
 
-var nome;
-
 function processPostback(event) {
     var senderId = event.sender.id;
     var payload = event.postback.payload;
@@ -66,36 +64,41 @@ function processPostback(event) {
     console.log("Received message from senderId: " + senderId);
     console.log("Message is: " + JSON.stringify(message));
 
-    if (true/*payload === "Greeting"*/) {
+    if (payload === "Greeting"*/) {
         // Get user's first name from the User Profile API
         // and include it in the greeting
-        request({
-            url: "https://graph.facebook.com/v2.6/" + senderId,
-            qs: {
-                access_token: process.env.PAGE_ACCESS_TOKEN,
-                fields: "first_name"
-            },
-            method: "GET"
-        }, function(error, response, body) {
-            var greeting = "";
-            if (error) {
-                console.log("Error getting user's name: " +  error);
-            } else {
-                var bodyObj = JSON.parse(body);
-                name = bodyObj.first_name;
-                nome = name;
-                greeting = "Oi " + name ;
-            }
-            var message = greeting + "Seja bem vindo"
-            sendMessage(senderId, {text: message});
-            mensagemDeBoasVindas(senderId);
 
-        });
+        var greeting = 'oi '+ getUserName();
+        var message = greeting + "Seja bem vindo"
+        sendMessage(senderId, {text: message});
+        
     } else if (payload === "Correct") {
         sendMessage(senderId, {text: "Awesome! What would you like to find out? Enter 'plot', 'date', 'runtime', 'director', 'cast' or 'rating' for the various details."});
     } else if (payload === "Incorrect") {
         sendMessage(senderId, {text: "Oops! Sorry about that. Try using the exact title of the movie"});
     }
+}
+
+function getUserName(){
+    var name;
+    request({
+        url: "https://graph.facebook.com/v2.6/" + senderId,
+        qs: {
+            access_token: process.env.PAGE_ACCESS_TOKEN,
+            fields: "first_name"
+        },
+        method: "GET"
+    }, function(error, response, body) {
+        var greeting = "";
+        if (error) {
+            console.log("Error getting user's name: " +  error);
+        } else {
+            var bodyObj = JSON.parse(body);
+            name = bodyObj.first_name;            
+            greeting = "Oi " + name ;
+        }               
+    });
+    return name;
 }
 
 function processMessage(event) {
@@ -146,6 +149,7 @@ function sendMessage(recipientId, message) {
 //DAQUI PARA BAIXO FUNCÕES PARA O CHATBOT DO MEU PLANETA CUIDO EU   
 
 function mensagemDeBoasVindas(senderId){
+    var nome = getUserName();
     var msg = nome+ ` acredito que você tomou uma excelente decisão hoje!
     Juntos cuidaremos do nosso planeta.
     Qual a sua contribuição?`;
