@@ -68,7 +68,7 @@ function processPostback(event) {
         // Get user's first name from the User Profile API
         // and include it in the greeting
 
-        var greeting = 'oi '+ getUserName();
+        var greeting = 'oi '+ getUserName(senderId);
         var message = greeting + "Seja bem vindo"
         sendMessage(senderId, {text: message});
         
@@ -79,7 +79,7 @@ function processPostback(event) {
     }
 }
 
-function getUserName(){
+function getUserName( senderId){
     var name;
     request({
         url: "https://graph.facebook.com/v2.6/" + senderId,
@@ -149,10 +149,12 @@ function sendMessage(recipientId, message) {
 //DAQUI PARA BAIXO FUNCÕES PARA O CHATBOT DO MEU PLANETA CUIDO EU   
 
 function mensagemDeBoasVindas(senderId){
-    var nome = getUserName();
-    var msg = nome+ ` acredito que você tomou uma excelente decisão hoje!
-    Juntos cuidaremos do nosso planeta.
-    Qual a sua contribuição?`;
+    
+    var msg = getUserName(senderId)+' Você fez uma excelente decisão hoje!';
+    sendMessage(senderId, msg);
+    
+    var msg = 'Ajude-nos a cuidar do planeja';
+    sendMessage(senderId, msg);
 
     message = {
         attachment: {
