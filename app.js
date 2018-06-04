@@ -217,9 +217,9 @@ app.get('/datepicker', (req, res, next) => {
     let referer = req.get('Referer');
     console.log(referer);
     if (referer) {
-        if (referer.indexOf('www.messenger.com') >= 0) {
+        if (referer.indexOf('messenger') >= 0) {
             res.setHeader('X-Frame-Options', 'ALLOW-FROM https://www.messenger.com/');
-        } else if (referer.indexOf('www.facebook.com') >= 0) {
+        } else if (referer.indexOf('face') >= 0) {
             res.setHeader('X-Frame-Options', 'ALLOW-FROM https://www.facebook.com/');
         }
         res.sendFile('datepicker2.html', {root: __dirname});
