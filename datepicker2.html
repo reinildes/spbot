@@ -1,5 +1,5 @@
 <head>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
   <!-- Isolated Version of Bootstrap, not needed if your site already uses Bootstrap -->
@@ -37,6 +37,19 @@
       });
     };
   </script>
+  <style>
+    html, body{
+      height: 100%;
+    }
+
+    .flex-grow {
+    flex: 1 0 auto;
+    height: 100%;
+  
+  
+}
+  </style>
+
 </head>
 
 <body>
@@ -44,10 +57,10 @@
   <div class="bootstrap-iso">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="col-md-12 col-sm-12 col-xs-12">
 
           <!-- Form code begins -->
-          <form method="post" autocomplete="off">
+          <form method="post" autocomplete="off" >
             <div class="form-group">
               <label for="formGroupExampleInput">Título da ocorrência</label>
               <input type="text" class="form-control" id="formGroupExampleInput" placeholder="De um breve titulo">
@@ -72,24 +85,25 @@
 
           </form>
           <!-- Form code ends -->
-          <script>
-            $(document).ready(function () {
-              var date_input = $('input[name="date"]'); //our date input has the name "date"
-              var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
-              var options = {
-                format: 'dd/mm/yyyy',
-                container: container,
-                todayHighlight: true,
-                autoclose: true,
-              };
-              date_input.datepicker(options);
-            });
 
-          </script>
         </div>
       </div>
     </div>
   </div>
 
+  <script>
+      $(document).ready(function () {
+        var date_input = $('input[name="date"]'); //our date input has the name "date"
+        var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+        var options = {
+          format: 'dd/mm/yyyy',
+          container: container,
+          todayHighlight: true,
+          autoclose: true,
+        };
+        date_input.datepicker(options);
+      });
+
+    </script>
 
 </body>
