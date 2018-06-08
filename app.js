@@ -96,7 +96,7 @@ function getUserName( senderId){
             greeting = "Oi " + name ;
         }               
     });
-    return name;
+    return name.first_name;
 }
 
 function processMessage(event) {
