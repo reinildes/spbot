@@ -153,36 +153,37 @@ function mensagemDeBoasVindas(senderId){
     var a = getUserName(senderId);
     console.log("a" +a);
 
-    var msg = a + ' Você fez uma excelente decisão hoje!';
+    var msg = a + ' Sua contribuição é muito importante para nós';
     sendMessage(senderId, {text: msg});
-    
-    var msg = 'Ajude-nos a cuidar do planeja';
-    sendMessage(senderId, msg);
+  
+    preparaWebView(senderId);
+//    var msg = 'Ajude-nos a cuidar do planeja';
+  //  sendMessage(senderId, msg);
 
-    message = {
-        attachment: {
-            type: "template",
-            payload: {
-                template_type: "generic",
-                elements: [{
-                    title: "Bem vindo",
-                    subtitle: msg,
-                    //image_url:"https://incrivel.club/criatividade-saude/diga-sua-idade-e-diremos-como-anda-seu-metabolismo-242910/",
-                    buttons: [{
-                        type: "postback",
-                        title: "Fazer uma contribuição",
-                        payload: "ser cidadao"
-                    }, {
-                        type: "postback",
-                        title: "Não quero cuidar",
-                        payload: "não cuidar"
-                    }]  
-                }]
-            }
-        }
-    };    
+    // message = {
+    //     attachment: {
+    //         type: "template",
+    //         payload: {
+    //             template_type: "generic",
+    //             elements: [{
+    //                 title: "Bem vindo",
+    //                 subtitle: msg,
+    //                 //image_url:"https://incrivel.club/criatividade-saude/diga-sua-idade-e-diremos-como-anda-seu-metabolismo-242910/",
+    //                 buttons: [{
+    //                     type: "postback",
+    //                     title: "Fazer uma contribuição",
+    //                     payload: "ser cidadao"
+    //                 }, {
+    //                     type: "postback",
+    //                     title: "Não quero cuidar",
+    //                     payload: "não cuidar"
+    //                 }]  
+    //             }]
+    //         }
+    //     }
+    // };    
 
-    sendMessage(senderId ,message);
+    // sendMessage(senderId ,message);
 }
 
 function digaIdade(userId){
