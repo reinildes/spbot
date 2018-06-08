@@ -76,7 +76,6 @@ function processPostback(event) {
 }
 
 function getUserName( senderId){
-    var name;
     request({
         url: "https://graph.facebook.com/v2.6/" + senderId,
         qs: {
@@ -85,18 +84,17 @@ function getUserName( senderId){
         },
         method: "GET"
     }, function(error, response, body) {
-        var greeting = "";
+        var name = "";
         if (error) {
             console.log("Error getting user's name: " +  error);
         } else {
             var bodyObj = JSON.parse(body);
             console.log("name");
             console.log(bodyObj);
-            name = bodyObj.first_name;            
-            greeting = "Oi " + name ;
+            name = bodyObj.first_name;      
+            return name.first_name;                  
         }               
     });
-    return name.first_name;
 }
 
 function processMessage(event) {
