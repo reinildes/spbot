@@ -36,8 +36,7 @@ app.post("/webhook", function (req, res) {
         // There may be multiple entries if batched
         req.body.entry.forEach(function(entry) {
             // Iterate over each messaging event
-            console.log("entry");
-                console.log(entry);
+            
             entry.messaging.forEach(function(event) {
                 console.log("event");
                 console.log(event);
@@ -153,7 +152,10 @@ function sendMessage(recipientId, message) {
 
 function mensagemDeBoasVindas(senderId){
     
-    var msg = getUserName(senderId)+' Você fez uma excelente decisão hoje!';
+    var a = getUserName(senderId);
+    console.log("a" +a);
+
+    var msg = a + ' Você fez uma excelente decisão hoje!';
     sendMessage(senderId, {text: msg});
     
     var msg = 'Ajude-nos a cuidar do planeja';
