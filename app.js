@@ -198,7 +198,6 @@ function mensagemDeBoasVindas(senderId){
     sendMessage(senderId, {text: msg});
 
     showTypingThenSend(senderId, true, () => {
-
         sendMessage(senderId, {text: "Por favor escolha entre as categorias abaixo"});
         displayCategories(senderId);    
     });
@@ -305,11 +304,10 @@ function askForMidia(senderId){
 function askForMoreInfo(senderId){
     step = 'pessoais';
     sendMessage(senderId, {text: "Obrigado! Já recebemos sua reclamação"});
-    //showTyping(senderId, true);
-
-    message = {
-        text: 'Para fins estatísticos, você se se importaria em compartilhar algumas informações pessoais ?',
-        quick_replies:[{    
+    showTypingThenSend(senderId, true, () =>{
+        message = {
+            text: 'Para fins estatísticos, você se se importaria em compartilhar algumas informações pessoais ?',
+            quick_replies:[{    
             content_type:"text",
             title: "Sim",
             payload: "sim",
@@ -317,9 +315,9 @@ function askForMoreInfo(senderId){
             content_type:"text",
             title: "Não",
             payload: "nao",
-        }]  
-    };
-    sendMessage(senderId, message);
+        }]};
+        sendMessage(senderId, message);
+    });
 }
 
 function askForAge(senderId){
@@ -381,8 +379,9 @@ function askForSugestion(senderId){
 
 function mensagemAgradecimento(senderId){
     sendMessage(senderId, {text: "Pronto! Já salvei tudo aqui."});
-    //showTyping(senderId, true);
-    sendMessage(senderId, {text: "Muito obrigado pelo seu tempo! O planeta agradece."});
+    showTypingThenSend(senderId, true, ()=>{
+        sendMessage(senderId, {text: "Muito obrigado pelo seu tempo! O planeta agradece."});
+    });
 }
 
 function formatDate(date){
@@ -417,13 +416,12 @@ function showTypingThenSend(senderId, onOff, doCallback){
     if (onOff){
         setTimeout(() =>{
             doCallback(senderId);
-        }, 2000);       
+        }, 5000);       
     }
 }
 
 function weirdRequest(senderId){
     sendMessage(senderId, {text: "Humm... Não te entendi o que você disse..."});
-    showTyping(senderId, true);
     showTypingThenSend(senderId, true, () => {
         sendMessage(senderId, {text: "Por favor, tente novamente ou digite 'Começar' para voltar ao começo"})
     });
