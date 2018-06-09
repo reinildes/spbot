@@ -226,12 +226,12 @@ function displayCategories(userId){
 }
 
 function askForTitle(senderId){
-    step = 'title';
+    step = 'titulo';
     sendMessage(senderId, {text: "Hummm... E que título você daria para essa reclamação?"})
 }
 
 function askForHistory(senderId){
-    step = 'history';
+    step = 'historia';
     sendMessage(senderId, {text: "Okay... Nos conte sua história"})
 }
 
