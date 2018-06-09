@@ -103,7 +103,7 @@ function processMessage(event) {
                     digaIdade(senderId);
                     break;
                 case "comecar":
-                    preparaWebView(senderId);
+                    mensagemDeBoasVindas(senderId);
                     break;
                 case "titulo":
                     reclamacaoRepository(senderId,'titulo', formattedMsg);
