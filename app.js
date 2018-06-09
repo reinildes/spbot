@@ -232,16 +232,8 @@ function digaIdade(userId){
                     image_url:"https://incrivel.club/criatividade-saude/diga-sua-idade-e-diremos-como-anda-seu-metabolismo-242910/",
                     buttons: [{
                         type: "postback",
-                        title: "20",
-                        payload: "20 anos"
-                    }, {
-                        type: "postback",
-                        title: "30",
-                        payload: "30 anos"
-                    },{
-                        type: "postback",
-                        title: "50",
-                        payload: "vish tu ja eh terceira idade"
+                        title: "Menor que 18 anos",
+                        payload: "<18"
                     }]
                 }]
             }
