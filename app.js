@@ -123,7 +123,8 @@ function processMessage(event) {
                     break;    
                 case "data":
                     reclamacaoRepository('data', formattedMsg);
-                    askForMidia(senderId);
+                    //askForMidia(senderId);
+                    askForMoreInfo(senderId);
                     break;    
                 case "midia":
                     //reclamacaoRepository('midia', formattedMsg);
