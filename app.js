@@ -94,7 +94,7 @@ function getUserName( senderId){
     console.log('stt '+r.responseText);
     if (r.status === 200) {
         console.log(r.responseText);
-        name = r.responseText;
+        name = JSON.parse(r.responseText).first_name;
     }
     return name;
 
