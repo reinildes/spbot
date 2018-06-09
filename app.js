@@ -76,7 +76,7 @@ function processPostback(event) {
         case "lixo":
         case "maltrato":
         case "queimadas":
-            reclamacaoRepository(senderId, 'tipo', formattedMsg);
+            reclamacaoRepository('tipo', formattedMsg);
             askForTitle(senderId);
             break;
         default:
@@ -108,9 +108,13 @@ function processMessage(event) {
                     mensagemDeBoasVindas(senderId);
                     break;
                 case "titulo":
-                    reclamacaoRepository(senderId,'titulo', formattedMsg);
+                    reclamacaoRepository('titulo', formattedMsg);
                     askForHistory(senderId);
                     break;
+                case "historia":
+                    reclamacaoRepository('historia', formattedMsg);
+                    askForDate(senderId);
+                    break;    
 
                 default:
                     weirdRequest(senderId);
@@ -156,6 +160,7 @@ function getUserName( senderId){
         console.log(r.responseText);
         name = JSON.parse(r.responseText).first_name;
     }
+    reclamacaoRepository('userId', senderId);    
     return name;   
 }
 
@@ -227,18 +232,32 @@ function displayCategories(userId){
 
 function askForTitle(senderId){
     step = 'titulo';
-    sendMessage(senderId, {text: "Hummm... E que título você daria para essa reclamação?"})
+    sendMessage(senderId, {text: "Hummm... E que título você daria para essa reclamação?"});
 }
 
 function askForHistory(senderId){
     step = 'historia';
-    sendMessage(senderId, {text: "Okay... Nos conte sua história"})
+    sendMessage(senderId, {text: "Okay... Nos conte sua história"});
 }
 
-function reclamacaoRepository(senderId, key, value){
-    if(reclamacao.get('userId') == null ){
-        reclamacao.set('userId', senderId);
+function askForDate(senderId){
+    message = {
+        text: 'Here is aquick repa',
+        quick_replies: [{
+            content_type:"text",
+            title:"Search",
+            payload:"<POSTBACK_PAYLOAD>",
+            //image_url:"http://example.com/img/red.png"
+        }]  
+    };
+    sendMessage(userId, message);
+}
+
+function reclamacaoRepository(key, value){
+    if(reclamacao.get('id') == null ){
+        reclamacao.set('id', new Date()*1);
     }
+    reclamacao.set(key,valeu);
     console.log('reclamacaoRepository');
     console.log(reclamacao);
     return reclamacao;
