@@ -97,6 +97,8 @@ function processMessage(event) {
             var formattedMsg = message.text.toLowerCase().trim();
             var type = step == null ? formattedMsg : step;
             
+            console.log('type');
+            console.log(type);
             //keywords that will trigger different responses
             switch (type) {
                 case "idade":
