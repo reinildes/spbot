@@ -140,6 +140,7 @@ function sendMessage(recipientId, message) {
         json: {
             recipient: {id: recipientId},
             message: message,
+            postback: 'REI'
         }
     }, function(error, response, body) {
         if (error) {
