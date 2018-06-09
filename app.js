@@ -130,7 +130,7 @@ function processMessage(event) {
                     break;    
                 case "pessoais":
                     reclamacaoRepository('pessoal', formattedMsg);
-                    if(formattedMsg=="nao"){
+                    if(formattedMsg=="sim"){
                         askForAge(senderId);
                     }else{
                         mensagemAgradecimento(senderId);
@@ -165,7 +165,6 @@ function sendMessage(recipientId, message) {
         json: {
             recipient: {id: recipientId},
             message: message,
-            postback: 'REI'
         }
     }, function(error, response, body) {
         if (error) {
