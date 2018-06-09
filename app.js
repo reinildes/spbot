@@ -231,8 +231,6 @@ function digaIdade(userId){
             payload: {
                 template_type: "generic",
                 elements: [{
-                    title: "Idade",
-                    subtitle: "Por favor, qual é a sua idade?",
                     image_url:"https://raychat.herokuapp.com/img?img=desmatamento.png",
                     buttons: [{
                         type: "postback",
@@ -241,8 +239,6 @@ function digaIdade(userId){
                     }]
                 },
                 {
-                    title: "Idade",
-                    subtitle: "Por favor, qual é a sua idade?",
                     image_url:"https://raychat.herokuapp.com/img?img=lixo.png",
                     buttons: [{
                         type: "postback",
