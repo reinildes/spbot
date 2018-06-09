@@ -131,7 +131,22 @@ function processMessage(event) {
                     //NEEDS TO FIGURE OUT HOW TO SAVE IMAGES
                     askForMoreInfo(senderId);
                     break;    
-
+                case "pessoais":
+                    reclamacaoRepository('pessoal', formattedMsg);
+                    askForAge(senderId);
+                    break;  
+                case "idade":
+                    reclamacaoRepository('idade', formattedMsg);
+                    askForSexOrientation(senderId);
+                    break;
+                case "sexo":
+                    reclamacaoRepository('sexo', formattedMsg);
+                    askForSugestion(senderId);
+                    break;
+                case "sugestao":
+                    reclamacaoRepository('sugestao', formattedMsg);
+                    mensagemAgradecimento(senderId);
+                    break;
                 default:
                     weirdRequest(senderId);
             }
@@ -304,6 +319,68 @@ function askForMoreInfo(senderId){
         }]  
     };
     sendMessage(senderId, message);
+}
+
+function askForAge(senderId){
+    step = 'idade';
+    sendMessage(senderId, {text: "Então vamos lá"});
+    message = {
+        text: 'Qual a sua faixa etária ?',
+        quick_replies:[{    
+            content_type:"text",
+            title: "Menor que 18 anos",
+            payload: "menor que 18 anos"
+        },{    
+            content_type:"text",
+            title: "Entre 18 e 30 anos",
+            payload: "entre 18 e 30 anos"
+        },{    
+            content_type:"text",
+            title: "Entre 30 e 50 anos",
+            payload: "entre 30 e 50 anos"
+        },{    
+            content_type:"text",
+            title: "Entre 50 e 70 anos",
+            payload: "entre 50 e 70 anos"
+        },{    
+            content_type:"text",
+            title: "Mais de 70 anos",
+            payload: "mais que 70 anos"
+        }]  
+    };
+    sendMessage(senderId, message);
+}
+
+function askForSexOrientation(senderId){
+    step = 'sexo';
+    sendMessage(senderId, {text: "Então vamos lá"});
+    message = {
+        text: 'Qual a sua orientação sexual ?',
+        quick_replies:[{    
+            content_type:"text",
+            title: "Feminino",
+            payload: "feminino"
+        },{    
+            content_type:"text",
+            title: "Masculino",
+            payload: "masculino"
+        },{    
+            content_type:"text",
+            title: "Outros",
+            payload: "outros"
+        }]  
+    };
+    sendMessage(senderId, message);
+}
+
+function askForSugestion(senderId){
+    step = 'sugestao';
+    sendMessage(senderId, {text: "Você gostaria de nos deixar alguma sugestão ?"});
+}
+
+function mensagemAgradecimento(senderId){
+    sendMessage(senderId, {text: "Pronto! Já salvei tudo aqui."})
+    sendMessage(senderId, {text: "Muito obrigado pelo seu tempo! O planeta agradece."})
 }
 
 function formatDate(date){
