@@ -1,6 +1,6 @@
 var express = require("express");
 var request = require("request");
-var fetch = require("node-fetch");
+var xMLHttpRequest = require("xmlhttprequest");
 var bodyParser = require("body-parser");
 
 var app = express();
