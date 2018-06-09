@@ -14,7 +14,6 @@
     "express": "^4.14.0",
     "mongoose": "^4.6.2",
     "request": "^2.75.0",
-    "xmlhttprequest": "^1.8.0",
-    "full-icu": "^1.2.1"
+    "xmlhttprequest": "^1.8.0"
   }
 }

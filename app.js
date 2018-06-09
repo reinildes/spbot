@@ -2,7 +2,6 @@ var express = require("express");
 var request = require("request");
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var bodyParser = require("body-parser");
-var icu = require('full-icu');
 
 var app = express();
 app.use(bodyParser.urlencoded({extended: false}));
@@ -267,9 +266,8 @@ function askForDate(senderId){
 }
 
 function formatDate(date){
-    var opt = {year:'numeric', month:'short', day: '2-digit'};
-    var brTime = new Intl.DateTimeFormat('pt-Br', opt).format;
-    return brTime(date);
+    const months = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+    return date.getDay() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear();
 }
 
 function reclamacaoRepository(key, value){
