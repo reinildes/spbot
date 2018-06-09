@@ -11,6 +11,7 @@ app.listen((process.env.PORT || 5000));
 var name = null;
 const serverUrl = "https://raychat.herokuapp.com/";
 var reclamacao = new Map();
+var step = null;
 
 // Server index page
 app.get("/", function (req, res) {
@@ -75,33 +76,12 @@ function processPostback(event) {
         case "lixo":
         case "maltrato":
         case "queimadas":
-            processCategories(senderId);
+            reclamacaoRepository(senderId, 'tipo', formattedMsg);
             askForTitle(senderId);
             break;
         default:
             weirdRequest(senderId);
     }   
-}
-
-function getUserName( senderId){
-
-    if (name != null){
-        return name;
-    }
-
-    var r = new XMLHttpRequest();
-    r.open('GET', "https://graph.facebook.com/v2.6/" + senderId 
-         +"?access_token="+ process.env.PAGE_ACCESS_TOKEN
-         +"&fields=first_name",
-          false);           
-    r.send(null);
-
-    console.log('stt '+r.responseText);
-    if (r.status === 200) {
-        console.log(r.responseText);
-        name = JSON.parse(r.responseText).first_name;
-    }
-    return name;   
 }
 
 function processMessage(event) {
@@ -115,14 +95,21 @@ function processMessage(event) {
         // You may get a text or attachment but not both
         if (message.text) {
             var formattedMsg = message.text.toLowerCase().trim();
+            var type = step == null ? formattedMsg : step;
+            
             //keywords that will trigger different responses
-            switch (formattedMsg) {
+            switch (type) {
                 case "idade":
                     digaIdade(senderId);
                     break;
-                case "comeca":
+                case "comecar":
                     preparaWebView(senderId);
                     break;
+                case "titulo":
+                    reclamacaoRepository(senderId,'titulo', formattedMsg);
+                    askForHistory(senderId);
+                    break;
+
                 default:
                     weirdRequest(senderId);
             }
@@ -147,6 +134,27 @@ function sendMessage(recipientId, message) {
             console.log("Error sending message: " + response.error);
         }
     });    
+}
+
+function getUserName( senderId){
+
+    if (name != null){
+        return name;
+    }
+
+    var r = new XMLHttpRequest();
+    r.open('GET', "https://graph.facebook.com/v2.6/" + senderId 
+         +"?access_token="+ process.env.PAGE_ACCESS_TOKEN
+         +"&fields=first_name",
+          false);           
+    r.send(null);
+
+    console.log('stt '+r.responseText);
+    if (r.status === 200) {
+        console.log(r.responseText);
+        name = JSON.parse(r.responseText).first_name;
+    }
+    return name;   
 }
 
 function mensagemDeBoasVindas(senderId){
@@ -215,18 +223,22 @@ function displayCategories(userId){
     sendMessage(userId, message);
 }
 
-function processCategories(senderId, value){
-    reclamacaoRepository(senderId).set('tipo', value);
-}
-
 function askForTitle(senderId){
+    step = 'title';
     sendMessage(senderId, {text: "Hummm... E que título você daria para essa reclamação?"})
 }
 
-function reclamacaoRepository(senderId){
+function askForHistory(senderId){
+    step = 'history';
+    sendMessage(senderId, {text: "Okay... Nos conte sua história"})
+}
+
+function reclamacaoRepository(senderId, key, value){
     if(reclamacao.get('userId') == null ){
         reclamacao.set('userId', senderId);
     }
+    console.log('reclamacaoRepository');
+    console.log(reclamacao);
     return reclamacao;
 }
 
