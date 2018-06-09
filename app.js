@@ -122,7 +122,12 @@ function processMessage(event) {
                     break;    
                 case "data":
                     reclamacaoRepository('data', formattedMsg);
-                    askForDate(senderId);
+                    askForMidia(senderId);
+                    break;    
+                case "midia":
+                    //reclamacaoRepository('midia', formattedMsg);
+                    //NEEDS TO FIGURE OUT HOW TO SAVE IMAGES
+                    askForMoreInfo(senderId);
                     break;    
 
                 default:
@@ -271,6 +276,30 @@ function askForDate(senderId){
     message = {
         text: 'Humm, E quando foi que isso aconteceu ?',
         quick_replies: daysArray  
+    };
+    sendMessage(senderId, message);
+}
+
+function askForMidia(senderId){
+    step = 'midia';
+    sendMessage(senderId, {text: "Beleza... Você tem algum vídeo ou foto que evidencie o ocorrido?"});
+}
+
+function askForMoreInfo(senderId){
+    step = 'pessoais';
+    sendMessage(senderId, {text: "Obrigado! Já recebemos sua reclamação"});
+
+    message = {
+        text: 'Para fins estatísticos, você se se importaria em compartilhar algumas informações pessoais ?',
+        quick_replies:[{    
+            content_type:"text",
+            title: "Sim",
+            payload: "sim",
+        },{    
+            content_type:"text",
+            title: "Não",
+            payload: "nao",
+        }]  
     };
     sendMessage(senderId, message);
 }
