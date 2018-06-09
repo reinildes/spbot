@@ -234,7 +234,7 @@ function digaIdade(userId){
                     title: "Idade",
                   //  subtitle: "Por favor, qual é a sua idade?",
                     image_url:"https://raychat.herokuapp.com/img?img=desmatamento.png",
-                    image_aspect_ratio:"square";
+                    image_aspect_ratio:"square",
                     buttons: [{
                         type: "postback",
                         title: "Menor que 18 anos",
@@ -245,7 +245,7 @@ function digaIdade(userId){
                     title: "Idade",
                    // subtitle: "Por favor, qual é a sua idade?",
                     image_url:"https://raychat.herokuapp.com/img?img=lixo.png",
-                    image_aspect_ratio:"square";
+                    image_aspect_ratio:"square",
                     buttons: [{
                         type: "postback",
                         title: "Menor que 18 anos",
