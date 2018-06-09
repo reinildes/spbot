@@ -91,6 +91,7 @@ function getUserName( senderId){
           false);           
     r.send(null);
 
+    console.log('stt '+request.responseText);
     if (request.status === 200) {
         console.log(request.responseText);
         name = request.responseText;
