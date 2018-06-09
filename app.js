@@ -64,13 +64,9 @@ function processPostback(event) {
     console.log("Received message from senderId: " + senderId);
     console.log("Message is: " + JSON.stringify(message));
 
-    if (payload === "Greeting") {
-        // Get user's first name from the User Profile API
-        // and include it in the greeting
-
-        var greeting = 'oi '+ getUserName(senderId);
-        var message = greeting + "Seja bem vindo"
-        sendMessage(senderId, {text: message});
+    if (payload === "Comecar") {
+        
+        mensagemDeBoasVindas(senderId);
         
     } else if (payload === "Correct") {
         sendMessage(senderId, {text: "Awesome! What would you like to find out? Enter 'plot', 'date', 'runtime', 'director', 'cast' or 'rating' for the various details."});
