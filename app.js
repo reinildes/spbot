@@ -263,7 +263,7 @@ function askForDate(senderId){
             content_type:"text",
             title: dateFormatted,
             payload: dateFormatted,
-            image_url: serverUrl+"img?img=cal.png"
+         //   image_url: serverUrl+"img?img=cal.png"
         };
         daysArray.push(aDay);  
     }
