@@ -1,6 +1,6 @@
 var express = require("express");
 var request = require("request");
-var xMLHttpRequest = require("xmlhttprequest");
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var bodyParser = require("body-parser");
 
 var app = express();
