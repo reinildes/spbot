@@ -241,16 +241,25 @@ function askForHistory(senderId){
 }
 
 function askForDate(senderId){
+
+    formatDate(new Date());
+    var aDay = {
+        content_type:"text",
+        title: dateFormatted,
+        payload: dateFormatted,
+    };
+
     message = {
         text: 'Here is aquick repa',
-        quick_replies: [{
-            content_type:"text",
-            title:"Search",
-            payload:"<POSTBACK_PAYLOAD>",
-            //image_url:"http://example.com/img/red.png"
-        }]  
+        quick_replies: [aDay]  
     };
+    
     sendMessage(senderId, message);
+}
+
+function formatDate(date){
+    var brTime = new Intl.DateTimeFormat('pt-br', opt).format;
+    return brTime(date);
 }
 
 function reclamacaoRepository(key, value){
