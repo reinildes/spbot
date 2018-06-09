@@ -310,7 +310,7 @@ function askForMoreInfo(senderId){
     sendMessage(senderId, {text: "Obrigado! Já recebemos sua reclamação"});
     showTypingThenSend(senderId, true, () =>{
         message = {
-            text: 'Para fins estatísticos, você se se importaria em compartilhar algumas informações pessoais ?',
+            text: 'Para fins estatísticos, você gostaria de compartilhar algumas informações pessoais ?',
             quick_replies:[{    
             content_type:"text",
             title: "Sim",
