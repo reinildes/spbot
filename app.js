@@ -325,32 +325,34 @@ function askForMoreInfo(senderId){
 
 function askForAge(senderId){
     step = 'idade';
-    sendMessage(senderId, {text: "Então vamos lá"});
-    message = {
-        text: 'Qual a sua faixa etária ?',
-        quick_replies:[{    
-            content_type:"text",
-            title: "Menor que 18 anos",
-            payload: "menor que 18 anos"
-        },{    
-            content_type:"text",
-            title: "Entre 18 e 30 anos",
-            payload: "entre 18 e 30 anos"
-        },{    
-            content_type:"text",
-            title: "Entre 30 e 50 anos",
-            payload: "entre 30 e 50 anos"
-        },{    
-            content_type:"text",
-            title: "Entre 50 e 70 anos",
-            payload: "entre 50 e 70 anos"
-        },{    
-            content_type:"text",
-            title: "Mais de 70 anos",
-            payload: "mais que 70 anos"
-        }]  
-    };
-    sendMessage(senderId, message);
+    sendMessage(senderId, {text: "Então vamos lá!"});
+    showTypingThenSend(senderId, true, ()=>{
+        message = {
+            text: 'Qual a sua faixa etária ?',
+            quick_replies:[{    
+                content_type:"text",
+                title: "Menor que 18 anos",
+                payload: "menor que 18 anos"
+            },{    
+                content_type:"text",
+                title: "Entre 18 e 30 anos",
+                payload: "entre 18 e 30 anos"
+            },{    
+                content_type:"text",
+                title: "Entre 30 e 50 anos",
+                payload: "entre 30 e 50 anos"
+            },{    
+                content_type:"text",
+                title: "Entre 50 e 70 anos",
+                payload: "entre 50 e 70 anos"
+            },{    
+                content_type:"text",
+                title: "Mais de 70 anos",
+                payload: "mais que 70 anos"
+            }]  
+        };
+        sendMessage(senderId, message);
+    })
 }
 
 function askForSexOrientation(senderId){
@@ -408,7 +410,7 @@ function showTypingThenSend(senderId, onOff, doCallback){
         method: "POST",
         json: {
             recipient: {id: senderId},
-            sender_action: onOff==true ? "typing_on" : "typing_off"
+            sender_action: onOff=="typing_on"
         }
     }, function(error, response, body) {
         if (error) {
@@ -418,7 +420,7 @@ function showTypingThenSend(senderId, onOff, doCallback){
     if (onOff){
         setTimeout(() =>{
             doCallback(senderId);
-        }, 2000);       
+        }, 3000);       
     }
 }
 
