@@ -268,7 +268,7 @@ function askForDate(senderId){
 
 function formatDate(date){
     const months = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
-    return date.getDay() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear();
+    return date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear();
 }
 
 function reclamacaoRepository(key, value){
