@@ -79,7 +79,7 @@ function processPostback(event) {
             askForTitle(senderId);
             break;
         default:
-            sendMessage(senderId, {text: "Humm... Não te entendi, o que você quiz dizer?"})    
+            weirdRequest(senderId);
     }   
 }
 
@@ -124,10 +124,10 @@ function processMessage(event) {
                     preparaWebView(senderId);
                     break;
                 default:
-                    mensagemDeBoasVindas(senderId); // por enquanto
+                    weirdRequest(senderId);
             }
         } else if (message.attachments) {
-            sendMessage(senderId, {text: "Sorry, I don't understand your request."});
+            weirdRequest(senderId);
         }
     }
 }
@@ -227,4 +227,8 @@ function reclamacaoRepository(senderId){
         reclamacao.set('userId', senderId);
     }
     return reclamacao;
+}
+
+function weirdRequest(senderId){
+    sendMessage(senderId, {text: "Humm... Não te entendi, o que você quiz dizer?"})
 }
