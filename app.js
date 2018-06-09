@@ -84,6 +84,8 @@ function getUserName( senderId){
     .then(res => {
         return res.json();
     }).then(json =>{
+        console.log("name");
+            console.log(json);
         return json.first_name;
     });    
 
