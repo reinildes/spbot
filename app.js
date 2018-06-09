@@ -10,6 +10,7 @@ app.listen((process.env.PORT || 5000));
 
 var name = null;
 const serverUrl = "https://raychat.herokuapp.com/";
+var reclamacao = new Map();
 
 // Server index page
 app.get("/", function (req, res) {
@@ -64,15 +65,22 @@ function processPostback(event) {
     console.log("Received message from senderId: " + senderId);
     console.log("Message is: " + JSON.stringify(message));
 
-    if (payload === "Comecar") {
-        
-        mensagemDeBoasVindas(senderId);
-        
-    } else if (payload === "Correct") {
-        sendMessage(senderId, {text: "Awesome! What would you like to find out? Enter 'plot', 'date', 'runtime', 'director', 'cast' or 'rating' for the various details."});
-    } else if (payload === "Incorrect") {
-        sendMessage(senderId, {text: "Oops! Sorry about that. Try using the exact title of the movie"});
-    }
+    var formattedMsg = payload.text.toLowerCase().trim();
+    switch(formattedMsg){
+        case "comecar":
+            mensagemDeBoasVindas(senderId);
+            break;
+        case "desmatamento":
+        case "desperdicio":
+        case "lixo":
+        case "maltrato":
+        case "queimadas":
+            processCategories(senderId);
+            askForTitle(senderId);
+            break;
+        default:
+            sendMessage(senderId, {text: "Humm... Não te entendi, o que você quiz dizer?"})    
+    }   
 }
 
 function getUserName( senderId){
@@ -204,4 +212,19 @@ function displayCategories(userId){
         }
     };
     sendMessage(userId, message);
+}
+
+function processCategories(senderId, value){
+    reclamacaoRepository(senderId).set('tipo', value);
+}
+
+function askForTitle(senderId){
+    sendMessage(senderId, {text: "Hummm... E que título você daria para essa reclamação?"})
+}
+
+function reclamacaoRepository(senderId){
+    if(reclamacao.get('userId') == null ){
+        reclamacao.set('userId', senderId);
+    }
+    return reclamacao;
 }
