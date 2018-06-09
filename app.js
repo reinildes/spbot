@@ -1,5 +1,3 @@
-import { setTimeout } from "timers";
-
 var express = require("express");
 var request = require("request");
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
