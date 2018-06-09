@@ -248,7 +248,7 @@ function displayCategories(userId){
                     }]
                 },{
                     title: "Queimadas",                   
-                    image_url: serverUrl+"img?img=qeuimadas.png&time="+new Date()*1,
+                    image_url: serverUrl+"img?img=queimadas.png&time="+new Date()*1,
                     buttons: [{
                         type: "postback",
                         title: "Fazer Reclamação",
