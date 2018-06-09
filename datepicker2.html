@@ -39,6 +39,13 @@
         date_input.datepicker(options);
       });
     };
+
+    MessengerExtensions.requestCloseBrowser(function success(uids) {
+        var psid = uids.psid;//This is your page scoped sender_id
+        $.post('https://raychat.herokuapp.com/sendOnWebviewClose', {"psid": psid})
+    }, function error(err) {
+        alert("Messenger Extension Error: " + err);
+    });
   </script>
   <style>
  

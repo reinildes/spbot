@@ -251,7 +251,10 @@ function digaIdade(userId){
     sendMessage(userId, message);
 }
 
-
+app.post('/sendOnWebviewClose', (req, res) => {
+    let psid = req.body.psid;
+    sendMessage(psid), {'text': 'Obrigado por sua reclamação'};
+});
 
 app.get('/datepicker', (req, res, next) => {
     let referer = req.get('Referer');
