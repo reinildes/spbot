@@ -286,5 +286,6 @@ function reclamacaoRepository(key, value){
 }
 
 function weirdRequest(senderId){
-    sendMessage(senderId, {text: "Humm... Não te entendi, o que você quiz dizer?"})
+    sendMessage(senderId, {text: "Humm... Não te entendi o que você disse..."})
+    sendMessage(senderId, {text: "Por favor, tente novamente ou digite 'Começar' para voltar ao começo"})
 }
