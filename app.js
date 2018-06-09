@@ -76,7 +76,7 @@ function processPostback(event) {
     }
 }
 
-function getUserName( senderId){
+function getUserName( senderId, cb){
 
     return 
     
@@ -89,7 +89,7 @@ function getUserName( senderId){
         console.log("name");
             console.log(json);
         return json.first_name;
-    });    
+    }).then(txt => cb(senderId, txt));    
 
     // request({
     //     url: "https://graph.facebook.com/v2.6/" + senderId,
@@ -165,13 +165,14 @@ function sendMessage(recipientId, message) {
 
 function mensagemDeBoasVindas(senderId){
     
-    var res = new Promise(getUserName(senderId));
-    res.then(text =>{
-        console.log("a" +text);
-        var msg = text + ' Sua contribuição é muito importante para nós';
+    
+    const callback = (senderId, txt) => {
+        console.log("a" +txt);
+        var msg = txt + ' Sua contribuição é muito importante para nós';
         sendMessage(senderId, {text: msg});
-    })
-
+    };
+    
+    var res = getUserName(senderId, callback);
 
   
     preparaWebView(senderId);
