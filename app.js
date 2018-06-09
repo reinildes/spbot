@@ -165,7 +165,7 @@ function displayCategories(userId){
                     buttons: [{
                         type: "postback",
                         title: "Fazer Reclamação",
-                        payload: "<18"
+                        payload: "desmatamento"
                     }]
                 },{
                     title: "Descarte de lixo em local inapropriado",                   
@@ -173,7 +173,7 @@ function displayCategories(userId){
                     buttons: [{
                         type: "postback",
                         title: "Fazer Reclamação",
-                        payload: "<18"
+                        payload: "lixo"
                     }]
                 },{
                     title: "Desperdício de água",                   
@@ -181,7 +181,7 @@ function displayCategories(userId){
                     buttons: [{
                         type: "postback",
                         title: "Fazer Reclamação",
-                        payload: "<18"
+                        payload: "desperdicio"
                     }]
                 },{
                     title: "Maltrato de animais",                   
@@ -189,15 +189,15 @@ function displayCategories(userId){
                     buttons: [{
                         type: "postback",
                         title: "Fazer Reclamação",
-                        payload: "<18"
+                        payload: "maltrato"
                     }]
                 },{
                     title: "Queimadas",                   
-                    image_url: serverUrl+"img?img=queimados.png",
+                    image_url: serverUrl+"img?img=queimadas.png",
                     buttons: [{
                         type: "postback",
                         title: "Fazer Reclamação",
-                        payload: "<18"
+                        payload: "queimadas"
                     }]
                 }
             
