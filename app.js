@@ -196,6 +196,7 @@ function mensagemDeBoasVindas(senderId){
     
     var msg = 'Olá '+getUserName(senderId) + ', sua contribuição é muito importante para nós!';
     sendMessage(senderId, {text: msg});
+
     showTyping(senderId, true);
 
     sendMessage(senderId, {text: "Por favor escolha entre as categorias abaixo"});
@@ -415,7 +416,7 @@ function showTyping(senderId, onOff){
     if (onOff){
         setTimeout(() =>{
             showTyping(senderId, false);
-        }, 1500);       
+        }, 5000);       
     }
 }
 
