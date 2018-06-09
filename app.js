@@ -9,6 +9,7 @@ app.use(bodyParser.json());
 app.listen((process.env.PORT || 5000));
 
 var name = null;
+const serverUrl = "https://raychat.herokuapp.com/",
 
 // Server index page
 app.get("/", function (req, res) {
@@ -159,20 +160,43 @@ function displayCategories(userId){
                 template_type: "generic",
                 image_aspect_ratio:"square",
                 elements: [{
-                    title: "Idade",                  
-                    image_url:"https://raychat.herokuapp.com/img?img=desmatamento.png",
+                    title: "Corte indevido de árvores",                  
+                    image_url: serverUrl+"img?img=desmatamento.png",
                     buttons: [{
                         type: "postback",
-                        title: "Menor que 18 anos",
+                        title: "Fazer Reclamação",
                         payload: "<18"
                     }]
-                },
-                {
-                    title: "Idade",                   
-                    image_url:"https://raychat.herokuapp.com/img?img=lixo.png",
+                },{
+                    title: "Descarte de lixo em local inapropriado",                   
+                    image_url: serverUrl+"img?img=lixo.png",
                     buttons: [{
                         type: "postback",
-                        title: "Menor que 18 anos",
+                        title: "Fazer Reclamação",
+                        payload: "<18"
+                    }]
+                },{
+                    title: "Desperdício de água",                   
+                    image_url: serverUrl+"img?img=desperdicio.png",
+                    buttons: [{
+                        type: "postback",
+                        title: "Fazer Reclamação",
+                        payload: "<18"
+                    }]
+                },{
+                    title: "Maltrato de animais",                   
+                    image_url: serverUrl+"img?img=maltrato.png",
+                    buttons: [{
+                        type: "postback",
+                        title: "Fazer Reclamação",
+                        payload: "<18"
+                    }]
+                },{
+                    title: "Queimadas",                   
+                    image_url: serverUrl+"img?img=queimados.png",
+                    buttons: [{
+                        type: "postback",
+                        title: "Fazer Reclamação",
                         payload: "<18"
                     }]
                 }
