@@ -253,7 +253,7 @@ function askForDate(senderId){
     step = 'data';
     var daysArray = [];
 
-    for(var i = 0; i <= 9; i++){
+    for(var i = 0; i <= 4; i++){
         var date = new Date();
         var newDate = new Date(date.setDate(date.getDate()-i));
         var dateFormatted = formatDate(newDate);
@@ -261,7 +261,7 @@ function askForDate(senderId){
         console.log(newDate);
         var aDay = {    
             content_type:"text",
-            title: '',
+            title: dateFormatted,
             payload: dateFormatted,
             image_url: serverUrl+"img?img=cal.png"
         };
