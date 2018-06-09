@@ -219,7 +219,7 @@ function processCategories(senderId, value){
 }
 
 function askForTitle(senderId){
-    sendMessage(senderId, {text: "Hummm... E que título você daria para essa reclamação?", payload:"titulo"})
+    sendMessage(senderId, {text: "Hummm... E que título você daria para essa reclamação?"})
 }
 
 function reclamacaoRepository(senderId){
