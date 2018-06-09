@@ -253,11 +253,12 @@ function askForDate(senderId){
         text: 'Here is aquick repa',
         quick_replies: [aDay]  
     };
-    
+
     sendMessage(senderId, message);
 }
 
 function formatDate(date){
+    var opt = {year:'numeric', month:'short', day: '2-digit'}.
     var brTime = new Intl.DateTimeFormat('pt-br', opt).format;
     return brTime(date);
 }
