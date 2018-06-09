@@ -165,7 +165,7 @@ function sendMessage(recipientId, message) {
 
 function mensagemDeBoasVindas(senderId){
     
-    var res = getUserName(senderId);
+    var res = new Promise(getUserName(senderId));
     res.then(text =>{
         console.log("a" +text);
         var msg = text + ' Sua contribuição é muito importante para nós';
@@ -257,7 +257,7 @@ function preparaWebView(sender_psid) {
             type: "template",
             payload: {
                 template_type: "button",
-                text: "Obrigado por contribuir! Você gostaria de fazer uma reclamação?",
+                text: "Como você gostaria de contribuir",
                 buttons: [{
                     type: "web_url",
                     url: "https://raychat.herokuapp.com/datepicker",
