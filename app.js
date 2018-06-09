@@ -2,6 +2,7 @@ var express = require("express");
 var request = require("request");
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var bodyParser = require("body-parser");
+var icu = require('full-icu');
 
 var app = express();
 app.use(bodyParser.urlencoded({extended: false}));
