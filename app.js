@@ -250,7 +250,7 @@ function askForDate(senderId){
             //image_url:"http://example.com/img/red.png"
         }]  
     };
-    sendMessage(userId, message);
+    sendMessage(senderId, message);
 }
 
 function reclamacaoRepository(key, value){
