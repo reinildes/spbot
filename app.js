@@ -130,7 +130,11 @@ function processMessage(event) {
                     break;    
                 case "pessoais":
                     reclamacaoRepository('pessoal', formattedMsg);
-                    askForAge(senderId);
+                    if(formattedMsg=="nao"){
+                        askForAge(senderId);
+                    }else{
+                        mensagemAgradecimento(senderId);
+                    }
                     break;  
                 case "idade":
                     reclamacaoRepository('idade', formattedMsg);
@@ -352,7 +356,6 @@ function askForAge(senderId){
 
 function askForSexOrientation(senderId){
     step = 'sexo';
-    sendMessage(senderId, {text: "Então vamos lá"});
     message = {
         text: 'Qual a sua orientação sexual ?',
         quick_replies:[{    
@@ -416,7 +419,7 @@ function showTypingThenSend(senderId, onOff, doCallback){
     if (onOff){
         setTimeout(() =>{
             doCallback(senderId);
-        }, 5000);       
+        }, 2000);       
     }
 }
 
