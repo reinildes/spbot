@@ -244,11 +244,12 @@ function askForDate(senderId){
 
     var daysArray = [];
 
-    for(var i = 1; i <= 10; i++){
+    for(var i = 0; i <= 9; i++){
         var date = new Date();
         var newDate = new Date(date.setDate(date.getDate()-i));
         var dateFormatted = formatDate(newDate);
         console.log(dateFormatted);
+        console.log(newDate);
         var aDay = {    
             content_type:"text",
             title: dateFormatted,
