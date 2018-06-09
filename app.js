@@ -197,9 +197,10 @@ function mensagemDeBoasVindas(senderId){
     var msg = 'Olá '+getUserName(senderId) + ', sua contribuição é muito importante para nós!';
     sendMessage(senderId, {text: msg});
 
-    showTyping(senderId, true);
+    showTypingThenSend(senderId, true, () => {
 
-    sendMessage(senderId, {text: "Por favor escolha entre as categorias abaixo"});
+        sendMessage(senderId, {text: "Por favor escolha entre as categorias abaixo"});
+    });
 
     displayCategories(senderId);    
 }
@@ -304,7 +305,7 @@ function askForMidia(senderId){
 function askForMoreInfo(senderId){
     step = 'pessoais';
     sendMessage(senderId, {text: "Obrigado! Já recebemos sua reclamação"});
-    showTyping(senderId, true);
+    //showTyping(senderId, true);
 
     message = {
         text: 'Para fins estatísticos, você se se importaria em compartilhar algumas informações pessoais ?',
@@ -380,7 +381,7 @@ function askForSugestion(senderId){
 
 function mensagemAgradecimento(senderId){
     sendMessage(senderId, {text: "Pronto! Já salvei tudo aqui."});
-    showTyping(senderId, true);
+    //showTyping(senderId, true);
     sendMessage(senderId, {text: "Muito obrigado pelo seu tempo! O planeta agradece."});
 }
 
@@ -399,7 +400,7 @@ function reclamacaoRepository(key, value){
     return reclamacao;
 }
 
-function showTyping(senderId, onOff){
+function showTypingThenSend(senderId, onOff, doCallback){
     request({
         url: "https://graph.facebook.com/v2.6/me/messages",
         qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
@@ -415,13 +416,15 @@ function showTyping(senderId, onOff){
     });
     if (onOff){
         setTimeout(() =>{
-            showTyping(senderId, false);
-        }, 5000);       
+            doCallback(senderId);
+        }, 2000);       
     }
 }
 
 function weirdRequest(senderId){
     sendMessage(senderId, {text: "Humm... Não te entendi o que você disse..."});
     showTyping(senderId, true);
-    sendMessage(senderId, {text: "Por favor, tente novamente ou digite 'Começar' para voltar ao começo"});
+    showTypingThenSend(senderId, true, () => {
+        sendMessage(senderId, {text: "Por favor, tente novamente ou digite 'Começar' para voltar ao começo"})
+    });
 }
