@@ -115,6 +115,10 @@ function processMessage(event) {
                     reclamacaoRepository('historia', formattedMsg);
                     askForDate(senderId);
                     break;    
+                case "data":
+                    reclamacaoRepository('data', formattedMsg);
+                    askForDate(senderId);
+                    break;    
 
                 default:
                     weirdRequest(senderId);
@@ -241,7 +245,7 @@ function askForHistory(senderId){
 }
 
 function askForDate(senderId){
-
+    step = 'data';
     var daysArray = [];
 
     for(var i = 0; i <= 9; i++){
@@ -263,7 +267,6 @@ function askForDate(senderId){
         text: 'Humm, E quando foi que isso aconteceu ?',
         quick_replies: daysArray  
     };
-
     sendMessage(senderId, message);
 }
 
