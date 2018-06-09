@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.listen((process.env.PORT || 5000));
 
-var name = "change it";
+var name = null;
 
 // Server index page
 app.get("/", function (req, res) {
@@ -80,20 +80,36 @@ function processPostback(event) {
 
 function getUserName( senderId){
 
-    return 
+    if (name != null){
+        return name;
+    }
+
+    var r = new XMLHttpRequest();
+    r.open('GET', "https://graph.facebook.com/v2.6/" + senderId 
+         +"?access_token="+ process.env.PAGE_ACCESS_TOKEN
+         +"&fields=first_name",
+          false);           
+    r.send(null);
+
+    if (request.status === 200) {
+        console.log(request.responseText);
+        name = request.responseText;
+    }
+    return name;
+
     
-    fetch("https://graph.facebook.com/v2.6/" + senderId 
-        +"?access_token="+ process.env.PAGE_ACCESS_TOKEN
-        +"&fields=first_name" )
-    .then(res => {
-        return res.json();
-    }).then(json =>{
-        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        console.log(json);
-        return json.first_name;
-    }).then(txt => {
-        name = txt;
-    });    
+    // fetch("https://graph.facebook.com/v2.6/" + senderId 
+    //     +"?access_token="+ process.env.PAGE_ACCESS_TOKEN
+    //     +"&fields=first_name" )
+    // .then(res => {
+    //     return res.json();
+    // }).then(json =>{
+    //     console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+    //     console.log(json);
+    //     return json.first_name;
+    // }).then(txt => {
+    //     name = txt;
+    // });    
 
     // request({
     //     url: "https://graph.facebook.com/v2.6/" + senderId,
