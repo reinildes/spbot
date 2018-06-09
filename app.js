@@ -76,25 +76,35 @@ function processPostback(event) {
 }
 
 function getUserName( senderId){
-    request({
-        url: "https://graph.facebook.com/v2.6/" + senderId,
-        qs: {
-            access_token: process.env.PAGE_ACCESS_TOKEN,
-            fields: "first_name"
-        },
-        method: "GET"
-    }, function(error, response, body) {
-        var name = "";
-        if (error) {
-            console.log("Error getting user's name: " +  error);
-        } else {
-            var bodyObj = JSON.parse(body);
-            console.log("name");
-            console.log(bodyObj);
-            name = bodyObj.first_name;      
-            return name.first_name;                  
-        }               
-    });
+
+    fetch("https://graph.facebook.com/v2.6/" + senderId 
+        +"?access_token="+ process.env.PAGE_ACCESS_TOKEN
+        +"&fields=first_name" )
+    .then(res => {
+        return res.json();
+    }).then(json =>{
+        return json.first_name;
+    });    
+
+    // request({
+    //     url: "https://graph.facebook.com/v2.6/" + senderId,
+    //     qs: {
+    //         access_token: process.env.PAGE_ACCESS_TOKEN,
+    //         fields: "first_name"
+    //     },
+    //     method: "GET"
+    // }, function(error, response, body) {
+    //     var name = "";
+    //     if (error) {
+    //         console.log("Error getting user's name: " +  error);
+    //     } else {
+    //         var bodyObj = JSON.parse(body);
+    //         console.log("name");
+    //         console.log(bodyObj);
+    //         name = bodyObj.first_name;      
+    //         return name.first_name;                  
+    //     }               
+    // });
 }
 
 function processMessage(event) {
