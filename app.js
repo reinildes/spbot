@@ -29,6 +29,10 @@ app.get("/webhook", function (req, res) {
  app.get("/datepickers", function(req, res){
      res.sendFile("./datepicker2.html", {root: __dirname});
  });
+ app.get("/img", function(req, res){
+    var img = req.query.img;
+    res.sendFile("./"+img, {root: __dirname+'/categories/'});
+});
 
 // All callbacks for Messenger will be POST-ed here
 app.post("/webhook", function (req, res) {
@@ -235,7 +239,19 @@ function digaIdade(userId){
                         title: "Menor que 18 anos",
                         payload: "<18"
                     }]
-                }]
+                },
+                {
+                    title: "Idade",
+                    subtitle: "Por favor, qual é a sua idade?",
+                    image_url:"https://incrivel.club/criatividade-saude/diga-sua-idade-e-diremos-como-anda-seu-metabolismo-242910/",
+                    buttons: [{
+                        type: "postback",
+                        title: "Menor que 18 anos",
+                        payload: "<18"
+                    }]
+                }
+            
+            ]
             }
         }
     };
