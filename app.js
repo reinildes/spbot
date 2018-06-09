@@ -413,7 +413,9 @@ function showTyping(senderId, onOff){
         }
     });
     if (onOff){
-        setTimeout(showTyping(senderId, false), 1500);       
+        setTimeout(() =>{
+            showTyping(senderId, false);
+        }, 1500);       
     }
 }
 
