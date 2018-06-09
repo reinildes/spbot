@@ -1,3 +1,5 @@
+import { setTimeout } from "timers";
+
 var express = require("express");
 var request = require("request");
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
@@ -196,6 +198,7 @@ function mensagemDeBoasVindas(senderId){
     
     var msg = 'Olá '+getUserName(senderId) + ', sua contribuição é muito importante para nós!';
     sendMessage(senderId, {text: msg});
+    showTyping(senderId, true);
 
     sendMessage(senderId, {text: "Por favor escolha entre as categorias abaixo"});
 
@@ -302,6 +305,7 @@ function askForMidia(senderId){
 function askForMoreInfo(senderId){
     step = 'pessoais';
     sendMessage(senderId, {text: "Obrigado! Já recebemos sua reclamação"});
+    showTyping(senderId, true);
 
     message = {
         text: 'Para fins estatísticos, você se se importaria em compartilhar algumas informações pessoais ?',
@@ -376,8 +380,9 @@ function askForSugestion(senderId){
 }
 
 function mensagemAgradecimento(senderId){
-    sendMessage(senderId, {text: "Pronto! Já salvei tudo aqui."})
-    sendMessage(senderId, {text: "Muito obrigado pelo seu tempo! O planeta agradece."})
+    sendMessage(senderId, {text: "Pronto! Já salvei tudo aqui."});
+    showTyping(senderId, true);
+    sendMessage(senderId, {text: "Muito obrigado pelo seu tempo! O planeta agradece."});
 }
 
 function formatDate(date){
@@ -395,7 +400,25 @@ function reclamacaoRepository(key, value){
     return reclamacao;
 }
 
+function showTyping(senderId, onOff){
+    request({
+        url: "https://graph.facebook.com/v2.6/me/messages",
+        qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
+        method: "POST",
+        json: {
+            recipient: {id: senderId},
+            sender_action: onOff==true ? "typing_on" : "typing_off"
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log("Error sending message: " + response.error);
+        }
+    });
+    setTimeout(showTyping(senderId, false), 1500);       
+}
+
 function weirdRequest(senderId){
     sendMessage(senderId, {text: "Humm... Não te entendi o que você disse..."});
+    showTyping(senderId, true);
     sendMessage(senderId, {text: "Por favor, tente novamente ou digite 'Começar' para voltar ao começo"});
 }
