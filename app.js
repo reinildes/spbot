@@ -410,7 +410,7 @@ function showTypingThenSend(senderId, onOff, doCallback){
         method: "POST",
         json: {
             recipient: {id: senderId},
-            sender_action: onOff=="typing_on"
+            sender_action:"typing_on"
         }
     }, function(error, response, body) {
         if (error) {
