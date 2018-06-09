@@ -244,10 +244,11 @@ function askForDate(senderId){
 
     var daysArray = [];
 
-    for(var i = 1; i <= 5; i++){
+    for(var i = 1; i <= 30; i++){
         var date = new Date();
         var newDate = new Date(date.setDate(date.getDate()-i));
         var dateFormatted = formatDate(newDate);
+        console.log(dateFormatted);
         var aDay = {    
             content_type:"text",
             title: dateFormatted,
@@ -266,7 +267,7 @@ function askForDate(senderId){
 
 function formatDate(date){
     var opt = {year:'numeric', month:'short', day: '2-digit'};
-    var brTime = new Intl.DateTimeFormat('pt-br', opt).format;
+    var brTime = new Intl.DateTimeFormat('pt-Br', opt).format;
     return brTime(date);
 }
 
