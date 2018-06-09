@@ -8,6 +8,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.listen((process.env.PORT || 5000));
 
+var name = "change it";
+
 // Server index page
 app.get("/", function (req, res) {
     res.send("Deployed!");
@@ -76,7 +78,7 @@ function processPostback(event) {
     }
 }
 
-function getUserName( senderId, cb){
+function getUserName( senderId){
 
     return 
     
@@ -86,10 +88,12 @@ function getUserName( senderId, cb){
     .then(res => {
         return res.json();
     }).then(json =>{
-        console.log("name");
-            console.log(json);
+        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        console.log(json);
         return json.first_name;
-    }).then(txt => cb(senderId, txt));    
+    }).then(txt => {
+        name = txt;
+    });    
 
     // request({
     //     url: "https://graph.facebook.com/v2.6/" + senderId,
