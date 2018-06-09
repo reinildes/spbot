@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 app.listen((process.env.PORT || 5000));
 
 var name = null;
-const serverUrl = "https://raychat.herokuapp.com/",
+const serverUrl = "https://raychat.herokuapp.com/";
 
 // Server index page
 app.get("/", function (req, res) {
