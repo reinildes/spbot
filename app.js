@@ -200,9 +200,9 @@ function mensagemDeBoasVindas(senderId){
     showTypingThenSend(senderId, true, () => {
 
         sendMessage(senderId, {text: "Por favor escolha entre as categorias abaixo"});
+        displayCategories(senderId);    
     });
 
-    displayCategories(senderId);    
 }
 
 function displayCategories(userId){
