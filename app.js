@@ -244,7 +244,7 @@ function askForDate(senderId){
 
     var daysArray = [];
 
-    for(var i = 1; i <= 30; i++){
+    for(var i = 1; i <= 10; i++){
         var date = new Date();
         var newDate = new Date(date.setDate(date.getDate()-i));
         var dateFormatted = formatDate(newDate);
