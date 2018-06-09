@@ -65,7 +65,7 @@ function processPostback(event) {
     console.log("Received message from senderId: " + senderId);
     console.log("Message is: " + JSON.stringify(message));
 
-    var formattedMsg = payload.text.toLowerCase().trim();
+    var formattedMsg = payload.toLowerCase().trim();
     switch(formattedMsg){
         case "comecar":
             mensagemDeBoasVindas(senderId);
