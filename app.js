@@ -185,15 +185,11 @@ function sendMessage(recipientId, message) {
 
 function mensagemDeBoasVindas(senderId){
     
+    var txt = getUserName(senderId);
     
-    const callback = (senderId, txt) => {
-        console.log("a" +txt);
-        var msg = txt + ' Sua contribuição é muito importante para nós';
-        sendMessage(senderId, {text: msg});
-    };
-    
-    var res = getUserName(senderId, callback);
-
+    console.log("a" +txt);
+    var msg = txt + ' Sua contribuição é muito importante para nós';
+    sendMessage(senderId, {text: msg});
   
     preparaWebView(senderId);
 //    var msg = 'Ajude-nos a cuidar do planeja';
