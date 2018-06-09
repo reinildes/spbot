@@ -97,6 +97,11 @@ function processMessage(event) {
             var formattedMsg = message.text.toLowerCase().trim();
             var type = step == null ? formattedMsg : step;
             
+            if(formattedMsg =="começar"||formattedMsg=="comecar"){
+                step = null;
+                mensagemDeBoasVindas(senderId);
+            }
+
             console.log('type');
             console.log(type);
             //keywords that will trigger different responses
@@ -256,7 +261,7 @@ function askForDate(senderId){
         console.log(newDate);
         var aDay = {    
             content_type:"text",
-            title: dateFormatted,
+            title: '',
             payload: dateFormatted,
             image_url: serverUrl+"img?img=cal.png"
         };
@@ -286,6 +291,6 @@ function reclamacaoRepository(key, value){
 }
 
 function weirdRequest(senderId){
-    sendMessage(senderId, {text: "Humm... Não te entendi o que você disse..."})
-    sendMessage(senderId, {text: "Por favor, tente novamente ou digite 'Começar' para voltar ao começo"})
+    sendMessage(senderId, {text: "Humm... Não te entendi o que você disse..."});
+    sendMessage(senderId, {text: "Por favor, tente novamente ou digite 'Começar' para voltar ao começo"});
 }
