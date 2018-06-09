@@ -100,6 +100,7 @@ function processMessage(event) {
             if(formattedMsg =="começar"||formattedMsg=="comecar"){
                 step = null;
                 mensagemDeBoasVindas(senderId);
+                return;
             }
 
             console.log('type');
