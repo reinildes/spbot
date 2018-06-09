@@ -265,6 +265,14 @@ function preparaWebView(sender_psid) {
                     title: "Fazer reclamação",
                     webview_height_ratio: "tall",
                     messenger_extensions: true
+                },{
+                    type: "postback",
+                    title: "Saber mais",
+                    payload: "Saber mais"
+                },{
+                    type: "postback",
+                    title: "Não contribuir",
+                    payload: "Não contribuir"
                 }]
             }
         }
