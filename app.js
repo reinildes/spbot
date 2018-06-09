@@ -229,7 +229,7 @@ function digaIdade(userId){
                 elements: [{
                     title: "Idade",
                     subtitle: "Por favor, qual é a sua idade?",
-                    //image_url:"https://incrivel.club/criatividade-saude/diga-sua-idade-e-diremos-como-anda-seu-metabolismo-242910/",
+                    image_url:"https://incrivel.club/criatividade-saude/diga-sua-idade-e-diremos-como-anda-seu-metabolismo-242910/",
                     buttons: [{
                         type: "postback",
                         title: "20",
