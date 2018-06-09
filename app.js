@@ -257,7 +257,7 @@ function reclamacaoRepository(key, value){
     if(reclamacao.get('id') == null ){
         reclamacao.set('id', new Date()*1);
     }
-    reclamacao.set(key,valeu);
+    reclamacao.set(key,value);
     console.log('reclamacaoRepository');
     console.log(reclamacao);
     return reclamacao;
