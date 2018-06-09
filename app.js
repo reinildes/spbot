@@ -242,16 +242,23 @@ function askForHistory(senderId){
 
 function askForDate(senderId){
 
-    formatDate(new Date());
-    var aDay = {
-        content_type:"text",
-        title: dateFormatted,
-        payload: dateFormatted,
-    };
+    var daysArray = [];
+
+    for (int i = 1; i <= 5; i++){
+        var date = new Date();
+        var newDate = new Date(date.setDate(date.getDate()-i));
+        var dateFormatted = formatDate(newDate);
+        var aDay = {    
+            content_type:"text",
+            title: dateFormatted,
+            payload: dateFormatted,
+        };
+        daysArray.push(aDay);  
+    }
 
     message = {
-        text: 'Here is aquick repa',
-        quick_replies: [aDay]  
+        text: 'Humm, E quando foi que isso aconteceu ?',
+        quick_replies: daysArray  
     };
 
     sendMessage(senderId, message);
