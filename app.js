@@ -148,8 +148,10 @@ function mensagemDeBoasVindas(senderId){
     
     var msg = 'Olá '+getUserName(senderId) + ', sua contribuição é muito importante para nós!';
     sendMessage(senderId, {text: msg});
-  
-    
+
+    sendMessage(senderId, {text: "Por favor escolha entre as categorias abaixo"});
+
+    displayCategories(senderId);    
 }
 
 function displayCategories(userId){
@@ -205,6 +207,5 @@ function displayCategories(userId){
             }
         }
     };
-    console.log("before send message");
     sendMessage(userId, message);
 }
