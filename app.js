@@ -258,7 +258,7 @@ function askForDate(senderId){
 }
 
 function formatDate(date){
-    var opt = {year:'numeric', month:'short', day: '2-digit'}.
+    var opt = {year:'numeric', month:'short', day: '2-digit'};
     var brTime = new Intl.DateTimeFormat('pt-br', opt).format;
     return brTime(date);
 }
