@@ -78,6 +78,8 @@ function processPostback(event) {
 
 function getUserName( senderId){
 
+    return 
+    
     fetch("https://graph.facebook.com/v2.6/" + senderId 
         +"?access_token="+ process.env.PAGE_ACCESS_TOKEN
         +"&fields=first_name" )
@@ -163,11 +165,14 @@ function sendMessage(recipientId, message) {
 
 function mensagemDeBoasVindas(senderId){
     
-    var a = getUserName(senderId);
-    console.log("a" +a);
+    var res = getUserName(senderId);
+    res.then(text =>{
+        console.log("a" +text);
+        var msg = text + ' Sua contribuição é muito importante para nós';
+        sendMessage(senderId, {text: msg});
+    })
 
-    var msg = a + ' Sua contribuição é muito importante para nós';
-    sendMessage(senderId, {text: msg});
+
   
     preparaWebView(senderId);
 //    var msg = 'Ajude-nos a cuidar do planeja';
