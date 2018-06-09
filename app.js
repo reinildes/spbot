@@ -14,8 +14,7 @@ var name = null;
 app.get("/", function (req, res) {
     res.send("Deployed!");
 });
-// Facebook Webhook
-// Used for verification
+// Facebook Webhook Used for verification
 app.get("/webhook", function (req, res) {
     if (req.query["hub.verify_token"] === process.env.VERIFICATION_TOKEN) {
         console.log("Verified webhook");
@@ -26,12 +25,9 @@ app.get("/webhook", function (req, res) {
     }
 });
 
- app.get("/datepickers", function(req, res){
-     res.sendFile("./datepicker2.html", {root: __dirname});
- });
  app.get("/img", function(req, res){
     var img = req.query.img;
-    res.sendFile("./"+img, {root: __dirname+'/categories/'});
+    res.sendFile("./"+img, {root: __dirname+'/img/'});
 });
 
 // All callbacks for Messenger will be POST-ed here
@@ -100,41 +96,7 @@ function getUserName( senderId){
         console.log(r.responseText);
         name = JSON.parse(r.responseText).first_name;
     }
-    return name;
-
-    
-    // fetch("https://graph.facebook.com/v2.6/" + senderId 
-    //     +"?access_token="+ process.env.PAGE_ACCESS_TOKEN
-    //     +"&fields=first_name" )
-    // .then(res => {
-    //     return res.json();
-    // }).then(json =>{
-    //     console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-    //     console.log(json);
-    //     return json.first_name;
-    // }).then(txt => {
-    //     name = txt;
-    // });    
-
-    // request({
-    //     url: "https://graph.facebook.com/v2.6/" + senderId,
-    //     qs: {
-    //         access_token: process.env.PAGE_ACCESS_TOKEN,
-    //         fields: "first_name"
-    //     },
-    //     method: "GET"
-    // }, function(error, response, body) {
-    //     var name = "";
-    //     if (error) {
-    //         console.log("Error getting user's name: " +  error);
-    //     } else {
-    //         var bodyObj = JSON.parse(body);
-    //         console.log("name");
-    //         console.log(bodyObj);
-    //         name = bodyObj.first_name;      
-    //         return name.first_name;                  
-    //     }               
-    // });
+    return name;   
 }
 
 function processMessage(event) {
@@ -148,10 +110,7 @@ function processMessage(event) {
         // You may get a text or attachment but not both
         if (message.text) {
             var formattedMsg = message.text.toLowerCase().trim();
-
-            // If we receive a text message, check to see if it matches any special
-            // keywords and send back the corresponding movie detail.
-            // Otherwise search for new movie.
+            //keywords that will trigger different responses
             switch (formattedMsg) {
                 case "idade":
                     digaIdade(senderId);
@@ -169,7 +128,6 @@ function processMessage(event) {
 }
 
 function sendMessage(recipientId, message) {
-    console.log("before send message in");
     request({
         url: "https://graph.facebook.com/v2.6/me/messages",
         qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
@@ -182,49 +140,18 @@ function sendMessage(recipientId, message) {
         if (error) {
             console.log("Error sending message: " + response.error);
         }
-    });
-    console.log("before send message end");
+    });    
 }
-
-//DAQUI PARA BAIXO FUNCÕES PARA O CHATBOT DO MEU PLANETA CUIDO EU   
 
 function mensagemDeBoasVindas(senderId){
     
     var msg = 'Olá '+getUserName(senderId) + ', sua contribuição é muito importante para nós!';
     sendMessage(senderId, {text: msg});
   
-    preparaWebView(senderId);
-//    var msg = 'Ajude-nos a cuidar do planeja';
-  //  sendMessage(senderId, msg);
-
-    // message = {
-    //     attachment: {
-    //         type: "template",
-    //         payload: {
-    //             template_type: "generic",
-    //             elements: [{
-    //                 title: "Bem vindo",
-    //                 subtitle: msg,
-    //                 //image_url:"https://incrivel.club/criatividade-saude/diga-sua-idade-e-diremos-como-anda-seu-metabolismo-242910/",
-    //                 buttons: [{
-    //                     type: "postback",
-    //                     title: "Fazer uma contribuição",
-    //                     payload: "ser cidadao"
-    //                 }, {
-    //                     type: "postback",
-    //                     title: "Não quero cuidar",
-    //                     payload: "não cuidar"
-    //                 }]  
-    //             }]
-    //         }
-    //     }
-    // };    
-
-    // sendMessage(senderId ,message);
+    
 }
 
-function digaIdade(userId){
-    console.log("diga idade");
+function displayCategories(userId){
     message = {
         attachment: {
             type: "template",
@@ -232,8 +159,7 @@ function digaIdade(userId){
                 template_type: "generic",
                 image_aspect_ratio:"square",
                 elements: [{
-                    title: "Idade",
-                  //  subtitle: "Por favor, qual é a sua idade?",
+                    title: "Idade",                  
                     image_url:"https://raychat.herokuapp.com/img?img=desmatamento.png",
                     buttons: [{
                         type: "postback",
@@ -242,8 +168,7 @@ function digaIdade(userId){
                     }]
                 },
                 {
-                    title: "Idade",
-                   // subtitle: "Por favor, qual é a sua idade?",
+                    title: "Idade",                   
                     image_url:"https://raychat.herokuapp.com/img?img=lixo.png",
                     buttons: [{
                         type: "postback",
@@ -258,77 +183,4 @@ function digaIdade(userId){
     };
     console.log("before send message");
     sendMessage(userId, message);
-}
-
-app.post('/sendOnWebviewClose', (req, res) => {
-    let psid = req.body.psid;
-    sendMessage(psid), {'text': 'Obrigado por sua reclamação'};
-});
-
-app.get('/datepicker', (req, res, next) => {
-    let referer = req.get('Referer');
-    console.log(referer);
-    if (referer) {
-        if (referer.indexOf('messenger') >= 0) {
-            res.setHeader('X-Frame-Options', 'ALLOW-FROM https://www.messenger.com/');
-        } else if (referer.indexOf('face') >= 0) {
-            res.setHeader('X-Frame-Options', 'ALLOW-FROM https://www.facebook.com/');
-        }
-        res.sendFile('datepicker2.html', {root: __dirname});
-    }
-});
-
-function preparaWebView(sender_psid) {
-    message = {
-        attachment: {
-            type: "template",
-            payload: {
-                template_type: "button",
-                text: "Como você gostaria de contribuir?",
-                buttons: [{
-                    type: "web_url",
-                    url: "https://raychat.herokuapp.com/datepicker",
-                    title: "Fazer reclamação",
-                    webview_height_ratio: "tall",
-                    messenger_extensions: true
-                },{
-                    type: "postback",
-                    title: "Saber mais",
-                    payload: "Saber mais"
-                },{
-                    type: "postback",
-                    title: "Não contribuir",
-                    payload: "Não contribuir"
-                }]
-            }
-        }
-    };
-
-    //return response;
-    sendMessage(sender_psid, message);
-}
-
-// Sends response messages via the Send API
-function callSendAPI(sender_psid, response) {
-    // Construct the message body
-    let request_body = {
-        "recipient": {
-            "id": sender_psid
-        },
-        "message": response
-    };
-    console.log(request_body);
-    // Send the HTTP request to the Messenger Platform
-    request({
-        "uri": "https://graph.facebook.com/v2.6/me/messages",
-        "qs": {"access_token": process.env.VERIFICATION_TOKEN},
-        "method": "POST",
-        "json": request_body
-    }, (err, res, body) => {
-        if (!err) {
-            console.log('message sent!')
-        } else {
-            console.error("Unable to send message:" + err);
-        }
-    });
 }
