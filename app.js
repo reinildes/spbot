@@ -412,7 +412,9 @@ function showTyping(senderId, onOff){
             console.log("Error sending message: " + response.error);
         }
     });
-    setTimeout(showTyping(senderId, false), 1500);       
+    if (onOff){
+        setTimeout(showTyping(senderId, false), 1500);       
+    }
 }
 
 function weirdRequest(senderId){
