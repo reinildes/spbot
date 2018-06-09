@@ -216,7 +216,7 @@ function displayCategories(userId){
                 image_aspect_ratio:"horizontal",
                 elements: [{
                     title: "Corte indevido de árvores",                  
-                    image_url: serverUrl+"img?img=desperdicio.png",
+                    image_url: serverUrl+"img?img=desmatamento.png&time="+new Date()*1,
                     buttons: [{
                         type: "postback",
                         title: "Fazer Reclamação",
@@ -224,7 +224,7 @@ function displayCategories(userId){
                     }]
                 },{
                     title: "Descarte de lixo em local inapropriado",                   
-                    image_url: serverUrl+"img?img=maltrato.png",
+                    image_url: serverUrl+"img?img=lixo.png&time="+new Date()*1,
                     buttons: [{
                         type: "postback",
                         title: "Fazer Reclamação",
@@ -232,7 +232,7 @@ function displayCategories(userId){
                     }]
                 },{
                     title: "Desperdício de água",                   
-                    image_url: serverUrl+"img?img=desperdicio.png",
+                    image_url: serverUrl+"img?img=desperdicio.png&time="+new Date()*1,
                     buttons: [{
                         type: "postback",
                         title: "Fazer Reclamação",
@@ -240,7 +240,7 @@ function displayCategories(userId){
                     }]
                 },{
                     title: "Maltrato de animais",                   
-                    image_url: serverUrl+"img?img=lixo.png",
+                    image_url: serverUrl+"img?img=maltrato.png&time="+new Date()*1,
                     buttons: [{
                         type: "postback",
                         title: "Fazer Reclamação",
@@ -248,7 +248,7 @@ function displayCategories(userId){
                     }]
                 },{
                     title: "Queimadas",                   
-                    image_url: serverUrl+"img?img=desmatamento.png",
+                    image_url: serverUrl+"img?img=qeuimadas.png&time="+new Date()*1,
                     buttons: [{
                         type: "postback",
                         title: "Fazer Reclamação",
