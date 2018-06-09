@@ -213,7 +213,7 @@ function displayCategories(userId){
             type: "template",
             payload: {
                 template_type: "generic",
-                image_aspect_ratio:"rectangle",
+                image_aspect_ratio:"horizontal",
                 elements: [{
                     title: "Corte indevido de árvores",                  
                     image_url: serverUrl+"img?img=desperdicio.png",
