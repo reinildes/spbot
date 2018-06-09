@@ -107,9 +107,6 @@ function processMessage(event) {
             console.log(type);
             //keywords that will trigger different responses
             switch (type) {
-                case "idade":
-                    digaIdade(senderId);
-                    break;
                 case "comecar":
                     mensagemDeBoasVindas(senderId);
                     break;
