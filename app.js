@@ -228,9 +228,9 @@ function digaIdade(userId){
     message = {
         attachment: {
             type: "template",
-            "image_aspect_ratio":"square",
             payload: {
                 template_type: "generic",
+                image_aspect_ratio:"square",
                 elements: [{
                     title: "Idade",
                   //  subtitle: "Por favor, qual é a sua idade?",
