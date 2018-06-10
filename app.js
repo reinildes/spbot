@@ -133,7 +133,7 @@ function processMessage(event) {
                     askForMidia(senderId);
                     break;
                 case "midia":
-                    if(['não', 'nao'].indexOf(formattedMsg) > 0){
+                    if(['não', 'nao'].indexOf(formattedMsg) > -1){
                         askForMoreInfo(senderId);
                     }else{
                         weirdRequest(senderId);
