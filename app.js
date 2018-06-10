@@ -324,9 +324,11 @@ function askForMidia(senderId){
 }
 
 function saveMedia(senderId, data){
-    fs.writeFile(__dirname+'/img/'+new Date()*1+'_image.png', data, function (err) {
+    var fileName = '/img/'+new Date()*1+'_image.png';
+    fs.writeFile(__dirname+fileName, data, function (err) {
         if (err) throw err;
-        console.log('It\'s saved!');
+        console.log('Salvo!');
+        reclamacaoReposistory('fileName', fileName);
     });
 }
 
