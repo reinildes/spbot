@@ -109,8 +109,7 @@ function processMessage(event) {
             console.log(formattedMsg);
             console.log('message.payload');
             console.log(message.payload);
-            console.log('message.quick_reply.payload');
-            console.log(message.quick_reply.payload);
+    
             //keywords that will trigger different responses
             switch (type) {
                 case "comecar":
@@ -129,6 +128,8 @@ function processMessage(event) {
                     askForLocation(senderId);
                     break;    
                 case "localizacao":
+                console.log('message.quick_reply.payload');
+                console.log(message.quick_reply.payload);
                     if(formattedMsg =='informarlocalizacao'){
                         showInformLocation(senderId);
                     }else if(formattedMsg =='enviarlocalizacao'){
