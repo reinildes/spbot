@@ -455,7 +455,7 @@ function mensagemAgradecimento(senderId){
                  elements: [
                     {
                        media_type: "image",
-                       url: serverUrl+"img?earthday.jpg&time="+new Date()*1
+                       attachment_id: "1270372353065820"
                     }
                  ]
               }

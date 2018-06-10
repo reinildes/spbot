@@ -1,0 +1,4 @@
+curl  \
+  -F 'message={"attachment":{"type":"image", "payload":{"is_reusable":true}}}' \
+  -F 'filedata=@/img/earthday.jpg;type=image/jpg' \
+  "https://graph.facebook.com/v2.6/me/message_attachments?access_token=<PAGE_ACCESS_TOKEN>"
