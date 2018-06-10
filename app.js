@@ -120,7 +120,18 @@ function processMessage(event) {
                     break;    
                 case "data":
                     reclamacaoRepository('data', formattedMsg);
-                    //askForMidia(senderId);
+                    askForLocation(senderId);
+                    break;    
+                case "localizacao":
+                    if(formattedMsg =='informarLocalizacao'){
+                        showInformLocation(senderId);
+                    }else if(formattedMsg =='enviarLocalizacao'){
+                        showSendLocation(senderId);
+                    }
+                    break;      
+                case "informarLocalizacaoR":
+                case "enviarLocalizacaoR":
+                    reclamacaoRepository('localizacao', formattedMsg);
                     askForMoreInfo(senderId);
                     break;    
                 case "midia":
@@ -379,6 +390,46 @@ function askForSexOrientation(senderId){
 function askForSugestion(senderId){
     step = 'sugestao';
     sendMessage(senderId, {text: "Você gostaria de nos deixar alguma sugestão ?"});
+}
+
+function askForLocation(senderId){
+    step = 'localizacao';
+    sendMessage(senderId, {text: "E em que local isso aconteceu ?"});
+    showTypingThenSend(senderId,true,()=>{
+
+        message = {
+            text: 'Escolha a forma mais conveniente de informar o local ?',
+            quick_replies:[{    
+                content_type:"text",
+                title: "Enviar minha localização",
+                payload: "enviarLocalizacao"
+            },{    
+                content_type:"text",
+                title: "Infomar Rua ou CEP",
+                payload: "informarLocalizacao"
+            }]  
+        };
+        sendMessage(senderId, message);
+    });
+}
+
+function showSendLocation(senderId){
+    step = 'enviarLocalizacao';
+
+        message = {
+            text: 'Compartilhe sua localização ?',
+            quick_replies:[{    
+                content_type:"location",
+            }]  
+        };
+    
+    sendMessage(senderId, message);
+}
+
+function showInformLocation(senderId){
+    step = 'informarLocalizacao';
+
+    sendMessage(senderId, {text: "Por favor informe o CEP ou a Rua"});
 }
 
 function mensagemAgradecimento(senderId){
