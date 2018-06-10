@@ -171,7 +171,7 @@ function processMessage(event) {
                     break;
                 case "midia":
                     //reclamacaoRepository('midia', message.attachments[0].payload);
-                    saveMedia(senderId, message.attachments[0].payload);
+                    saveMedia(senderId, message.attachments[0].payload.url);
                     askForMoreInfo(senderId);
                     break;    
                 default:       
@@ -323,12 +323,14 @@ function askForMidia(senderId){
     sendMessage(senderId, {text: "Beleza... Você tem algum vídeo ou foto que evidencie o ocorrido ?"});
 }
 
-function saveMedia(senderId, data){
-    var fileName = '/img/'+new Date()*1+'_image.png';
-    fs.writeFile(__dirname+fileName, data, function (err) {
-        if (err) throw err;
-        console.log('Salvo!');
-        reclamacaoRepository('fileName', fileName);
+function saveMedia(senderId, imageUrl){
+    request.get({url: imageUrl, encoding: 'binary'}, function (err, response, body) {
+        var fileName = '/img/'+new Date()*1+'_image.png';
+        fs.writeFile(__dirname+fileName, body, 'binary', function(err) {
+            if (err) throw err;
+            console.log('File salved!');
+            reclamacaoRepository('fileName', fileName);
+        }); 
     });
 }
 
