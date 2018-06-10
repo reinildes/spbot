@@ -341,13 +341,13 @@ function askForMoreInfo(senderId){
             content_type:"text",
             title: "Não",
             payload: "nao",
-            image_url: serverUrl+"img?img=no.png&time="+new Date()*1
+            image_url: serverUrl+"img?img=nao.png&time="+new Date()*1
         }]};
         sendMessage(senderId, message);
     });
 }
 
-function askForAge2(senderId){
+function askForAgfe(senderId){
     step = 'idade';
     sendMessage(senderId, {text: "Então vamos lá!"});
     showTypingThenSend(senderId, true, ()=>{
@@ -397,18 +397,12 @@ function askForAge(senderId){
                     image_url: serverUrl+"img?img=lixo.png&time="+new Date()*1,          
                     buttons: [
                       {
-                        title: "Menor que 18 anos",
-                        type: "postback",
-                      }
-                    ]
-                  },{
-                    title: "Classic T-Shirt Collection",
-                    subtitle: "See all our colors",
-                    image_url: serverUrl+"img?img=desperdicio.png&time="+new Date()*1,          
-                    buttons: [
-                      {
-                        title: "Menor que 19 anos",
-                        type: "postback",
+                        title: "Menor que 18",
+                        type: "web_url",
+                        url: "https://peterssendreceiveapp.ngrok.io/collection",
+                        messenger_extensions: false,
+                        webview_height_ratio: "tall",
+                        fallback_url: "https://peterssendreceiveapp.ngrok.io/"            
                       }
                     ]
                   }]
