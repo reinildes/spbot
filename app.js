@@ -431,15 +431,18 @@ function askForSexOrientation(senderId){
         quick_replies:[{    
             content_type:"text",
             title: "Feminino",
-            payload: "feminino"
+            payload: "feminino",
+            image_url: serverUrl+"img?img=f.png&time="+new Date()*1
         },{    
             content_type:"text",
             title: "Masculino",
-            payload: "masculino"
+            payload: "masculino",
+            image_url: serverUrl+"img?img=m.png&time="+new Date()*1
         },{    
             content_type:"text",
             title: "Outros",
-            payload: "outros"
+            payload: "outros",
+            image_url: serverUrl+"img?img=g.png&time="+new Date()*1
         }]  
     };
     sendMessage(senderId, message);
