@@ -222,7 +222,7 @@ function getUserName( senderId){
 
 function mensagemDeBoasVindas(senderId){
     step = null;
-    reclamacao = null;
+    reclamacao = {};
     var msg = 'Olá '+getUserName(senderId) + ', sua contribuição é muito importante para nós!';
     sendMessage(senderId, {text: msg});
 
