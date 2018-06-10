@@ -478,7 +478,6 @@ function mensagemAgradecimento(senderId){
 }
 
 function yesNoQuestion(text){
-    return
     message = {
         text: text,
         quick_replies:[{    
@@ -492,6 +491,7 @@ function yesNoQuestion(text){
         payload: "nao",
         image_url: serverUrl+"img?img=no.png&time="+new Date()*1
     }]};
+    return message;
 }
 
 function formatDate(date){
