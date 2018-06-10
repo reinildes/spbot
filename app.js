@@ -92,6 +92,9 @@ function processMessage(event) {
         console.log("Received message from senderId: " + senderId);
         console.log("Message is: " + JSON.stringify(message));
 
+        console.log('type');
+            console.log(type);
+
         // You may get a text or attachment but not both
         if (message.text) {
             var formattedMsg = message.text.toLowerCase().trim();
@@ -103,8 +106,6 @@ function processMessage(event) {
                 return;
             }
 
-            console.log('type');
-            console.log(type);
             console.log('formattedMsg');
             console.log(formattedMsg);
             console.log('message.payload');
