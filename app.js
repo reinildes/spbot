@@ -556,6 +556,5 @@ function weirdRequest(senderId){
 }
 
 app.get("/db", function(req, res){
-    res.writeHead(200, {"Content-Type": "application/json"});
     res.json(reclamacaoDummyDB);
 });
