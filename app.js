@@ -320,7 +320,7 @@ function askForDate(senderId){
 
 function askForMidia(senderId){
     step = 'midia';
-    sendMessage(senderId, {text: "Beleza... Você tem algum vídeo ou foto que evidencie o ocorrido ?"});
+    sendMessage(senderId, {text: "Beleza! Envie uma foto ou vídeo do ocorrido ?"});
 }
 
 function saveMedia(senderId, imageUrl){
