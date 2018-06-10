@@ -237,7 +237,7 @@ function displayCategories(userId){
             type: "template",
             payload: {
                 template_type: "generic",
-                image_aspect_ratio:"horizontal",
+                image_aspect_ratio:"square",
                 elements: [{
                     title: "Corte indevido de árvores",                  
                     image_url: serverUrl+"img?img=desmatamento.png&time="+new Date()*1,
