@@ -157,7 +157,7 @@ function processMessage(event) {
             }
         } else if (message.attachments) {
             switch (type) {
-                case "location":
+                case "localizacao":
                     reclamacaoRepository('localizacao', message.attachments.payload);
                     askForMoreInfo(senderId);
                     break;
@@ -398,7 +398,7 @@ function askForLocation(senderId){
     showTypingThenSend(senderId,true,()=>{
 
         message = {
-            text: 'O mapa já vem sua localização selecionada, mas caso você deseje outro local é so clicar na \'lupa\' e pesquisar o endereço que deseja',
+            text: 'O mapa já vem com a sua localização selecionada, mas caso você deseje outro local é so clicar na \'lupa\' e pesquisar o endereço que deseja',
             quick_replies:[{    
                 content_type:"location",
             }]  
