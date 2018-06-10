@@ -123,9 +123,9 @@ function processMessage(event) {
                     askForLocation(senderId);
                     break;    
                 case "localizacao":
-                    if(formattedMsg =='informarLocalizacao'){
+                    if(formattedMsg =='informarlocalizacao'){
                         showInformLocation(senderId);
-                    }else if(formattedMsg =='enviarLocalizacao'){
+                    }else if(formattedMsg =='enviarlocalizacao'){
                         showSendLocation(senderId);
                     }
                     break;      
