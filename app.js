@@ -14,6 +14,7 @@ var reclamacao = {};
 var reclamacaoDummyDB = [];
 var step = null;
 const months = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+app.set('json spaces', 2);
 
 // Server index page
 app.get("/", function (req, res) {
