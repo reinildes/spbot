@@ -336,10 +336,12 @@ function askForMoreInfo(senderId){
             content_type:"text",
             title: "Sim",
             payload: "sim",
+            image_url: serverUrl+"img?img=yes.png&time="+new Date()*1
         },{    
             content_type:"text",
             title: "Não",
             payload: "nao",
+            image_url: serverUrl+"img?img=nao.png&time="+new Date()*1
         }]};
         sendMessage(senderId, message);
     });
