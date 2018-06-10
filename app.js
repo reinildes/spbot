@@ -2,6 +2,7 @@ var express = require("express");
 var request = require("request");
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var bodyParser = require("body-parser");
+var fs = require('fs');
 
 var app = express();
 app.use(bodyParser.urlencoded({extended: false}));
@@ -129,7 +130,8 @@ function processMessage(event) {
                     break;
                 case "informarLocalizacao":
                     reclamacaoRepository('localizacao', formattedMsg);
-                    askForMoreInfo(senderId);
+                    //askForMoreInfo(senderId);
+                    askForMidia(senderId);
                     break;
                 case "midia":
                     //reclamacaoRepository('midia', formattedMsg);
@@ -164,8 +166,14 @@ function processMessage(event) {
             switch (type) {
                 case "enviarLocalizacao":
                     reclamacaoRepository('localizacao', message.attachments[0].payload);
-                    askForMoreInfo(senderId);
+                    //askForMoreInfo(senderId);
+                    askForMidia(senderId);
                     break;
+                case "midia":
+                    //reclamacaoRepository('midia', message.attachments[0].payload);
+                    saveMedia(senderId, message.attachments[0].payload);
+                    askForMoreInfo(senderId);
+                    break;    
                 default:       
                     weirdRequest(senderId);
             }    
@@ -313,6 +321,13 @@ function askForDate(senderId){
 function askForMidia(senderId){
     step = 'midia';
     sendMessage(senderId, {text: "Beleza... Você tem algum vídeo ou foto que evidencie o ocorrido ?"});
+}
+
+function saveMedia(senderId, data){
+    fs.writeFile(__dirname+'/img/'+new Date()*1+'_image.png', data, function (err) {
+        if (err) throw err;
+        console.log('It\'s saved!');
+    });
 }
 
 function askForMoreInfo(senderId){
