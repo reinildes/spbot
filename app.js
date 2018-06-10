@@ -325,7 +325,7 @@ function askForMidia(senderId){
 
 function saveMedia(senderId, imageUrl){
     request.get({url: imageUrl, encoding: 'binary'}, function (err, response, body) {
-        var fileName = '/img/'+new Date()*1+'_image.png';
+        var fileName = '/img/'+new Date()*1+'_img';
         fs.writeFile(__dirname+fileName, body, 'binary', function(err) {
             if (err) throw err;
             console.log('File salved!');
