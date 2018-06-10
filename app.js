@@ -556,6 +556,5 @@ function weirdRequest(senderId){
 }
 
 app.get("/db", function(req, res){
-    var jsonRes = JSON.stringify(reclamacaoDummyDB);
-    res.json(jsonRes);
+    res.json(reclamacaoDummyDB);
 });
