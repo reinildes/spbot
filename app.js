@@ -41,11 +41,9 @@ app.post("/webhook", function (req, res) {
     console.log("webhook triggered")
     // Make sure this is a page subscription
     if (req.body.object == "page") {
-        // Iterate over each entry
-        // There may be multiple entries if batched
+        // Iterate over each entry There may be multiple entries if batched
         req.body.entry.forEach(function(entry) {
             // Iterate over each messaging event
-            
             entry.messaging.forEach(function(event) {
                 console.log("event");
                 console.log(event);
@@ -56,7 +54,6 @@ app.post("/webhook", function (req, res) {
                 }
             });
         });
-
         res.sendStatus(200);
     }
 });
@@ -64,10 +61,8 @@ app.post("/webhook", function (req, res) {
 function processPostback(event) {
     var senderId = event.sender.id;
     var payload = event.postback.payload;
-    var message = event.message;
     console.log("Entering processPostback");
     console.log("Received message from senderId: " + senderId);
-    console.log("Message is: " + JSON.stringify(message));
 
     var formattedMsg = payload.toLowerCase().trim();
     switch(formattedMsg){
@@ -112,7 +107,6 @@ function processMessage(event) {
             console.log('message.payload');
             console.log(message.payload);
     
-            //keywords that will trigger different responses
             switch (step) {
                 case "comecar":
                     mensagemDeBoasVindas(senderId);
@@ -211,9 +205,7 @@ function getUserName( senderId){
           false);           
     r.send(null);
 
-    console.log('stt '+r.responseText);
     if (r.status === 200) {
-        console.log(r.responseText);
         name = JSON.parse(r.responseText).first_name;
     }
     reclamacaoRepository('userId', senderId);    
@@ -230,7 +222,6 @@ function mensagemDeBoasVindas(senderId){
         sendMessage(senderId, {text: "Por favor escolha entre as categorias abaixo"});
         displayCategories(senderId);    
     });
-
 }
 
 function displayCategories(userId){
@@ -382,46 +373,6 @@ function askForAge(senderId){
                 image_url: serverUrl+"img?img=homem6.png&time="+new Date()*1
             }]  
         };
-        sendMessage(senderId, message);
-    })
-}
-
-
-function askForAgeList(senderId){
-    step = 'idade';
-    sendMessage(senderId, {text: "Então vamos lá!"});
-    showTypingThenSend(senderId, true, ()=>{
-        message =   {
-            attachment: {
-              type: "template",
-              payload: {
-                template_type: "list",
-                top_element_style: "compact",
-                elements: [
-                  {
-                    title: "Classic T-Shirt Collection",                    
-                    image_url: serverUrl+"img?img=lixo.png&time="+new Date()*1,          
-                    buttons: [
-                      {
-                        title: "Menor que 18 anos",
-                        type: "postback",
-                        payload: "menor que 18"         
-                      }
-                    ]
-                  },{
-                  title: "Classic T-Shirt Collection",                    
-                  image_url: serverUrl+"img?img=lixo.png&time="+new Date()*1,          
-                  buttons: [
-                    {
-                      title: "Menor que 18 anos",
-                      type: "postback",
-                      payload: "menor que 18"         
-                    }
-                  ]
-                }]
-            }
-        }  
-    };
         sendMessage(senderId, message);
     })
 }
