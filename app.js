@@ -109,6 +109,8 @@ function processMessage(event) {
             console.log(formattedMsg);
             console.log('message.payload');
             console.log(message.payload);
+            console.log('message.quick_reply.payload');
+            console.log(message.quick_reply.payload);
             //keywords that will trigger different responses
             switch (type) {
                 case "comecar":
@@ -402,10 +404,10 @@ function askForLocation(senderId){
     showTypingThenSend(senderId,true,()=>{
 
         message = {
-            text: 'Escolha a forma mais conveniente de informar o local ?',
+            text: 'Escolha a forma mais conveniente de informar o local',
             quick_replies:[{    
                 content_type:"text",
-                title: "Enviar minha localização",
+                title: "Enviar localização",
                 payload: "enviarLocalizacao"
             },{    
                 content_type:"text",
