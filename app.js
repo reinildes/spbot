@@ -134,8 +134,8 @@ function processMessage(event) {
                         showSendLocation(senderId);
                     }
                     break;      
-                case "informarLocalizacaoR":
-                case "enviarLocalizacaoR":
+                case "informarlocalizacao":
+                case "enviarlocalizacao":
                     reclamacaoRepository('localizacao', formattedMsg);
                     askForMoreInfo(senderId);
                     break;    
