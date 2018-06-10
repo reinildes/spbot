@@ -105,6 +105,10 @@ function processMessage(event) {
 
             console.log('type');
             console.log(type);
+            console.log('formattedMsg');
+            console.log(formattedMsg);
+            console.log('message.payload');
+            console.log(message.payload);
             //keywords that will trigger different responses
             switch (type) {
                 case "comecar":
