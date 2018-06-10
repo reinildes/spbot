@@ -157,6 +157,7 @@ function processMessage(event) {
                     weirdRequest(senderId);
             }
         } else if (message.attachments) {
+            var type = step;
             switch (type) {
                 case "localizacao":
                     reclamacaoRepository('localizacao', message.attachments.payload);
