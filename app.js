@@ -130,13 +130,14 @@ function processMessage(event) {
                     break;
                 case "informarLocalizacao":
                     reclamacaoRepository('localizacao', formattedMsg);
-                    //askForMoreInfo(senderId);
                     askForMidia(senderId);
                     break;
                 case "midia":
-                    //reclamacaoRepository('midia', formattedMsg);
-                    //NEEDS TO FIGURE OUT HOW TO SAVE IMAGES
-                    askForMoreInfo(senderId);
+                    if(['não', 'nao'].indexOf(formattedMsg) > 0){
+                        askForMoreInfo(senderId);
+                    }else{
+                        weirdRequest(senderId);
+                    }
                     break;    
                 case "pessoais":
                     reclamacaoRepository('pessoal', formattedMsg);
@@ -320,7 +321,7 @@ function askForDate(senderId){
 
 function askForMidia(senderId){
     step = 'midia';
-    sendMessage(senderId, {text: "Beleza! Envie uma foto ou vídeo do ocorrido ?"});
+    sendMessage(senderId, {text: "Beleza! Você tem um vídeo ou foto do ocorrido? Envie um vídeo ou responda 'Não' caso não queira enviar vídeo"});
 }
 
 function saveMedia(senderId, imageUrl){
