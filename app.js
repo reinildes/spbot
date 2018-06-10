@@ -97,7 +97,7 @@ function processMessage(event) {
         if (message.text) {
             var formattedMsg = message.text.toLowerCase().trim();
             
-            if(formattedMsg =="começar"||formattedMsg=="comecar"){
+            if(formattedMsg =="começar"||formattedMsg=="comecar"||formattedMsg=="oi"||formattedMsg=="ola"){
                 mensagemDeBoasVindas(senderId);
                 return;
             }
@@ -108,9 +108,6 @@ function processMessage(event) {
             console.log(message.payload);
     
             switch (step) {
-                case "comecar":
-                    mensagemDeBoasVindas(senderId);
-                    break;
                 case "titulo":
                     reclamacaoRepository('titulo', formattedMsg);
                     askForHistory(senderId);
