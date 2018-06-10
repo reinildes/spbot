@@ -127,18 +127,6 @@ function processMessage(event) {
                     reclamacaoRepository('data', formattedMsg);
                     askForLocation(senderId);
                     break;    
-                case "localizacao":
-                    if(message.quick_reply.payload =='informarLocalizacao'){
-                        showInformLocation(senderId);
-                    }else if(message.quick_reply.payload =='enviarLocalizacao'){
-                        showSendLocation(senderId);
-                    }
-                    break;      
-                case "informarlocalizacao":
-                case "enviarlocalizacao":
-                    reclamacaoRepository('localizacao', formattedMsg);
-                    askForMoreInfo(senderId);
-                    break;    
                 case "midia":
                     //reclamacaoRepository('midia', formattedMsg);
                     //NEEDS TO FIGURE OUT HOW TO SAVE IMAGES
@@ -168,7 +156,14 @@ function processMessage(event) {
                     weirdRequest(senderId);
             }
         } else if (message.attachments) {
-            weirdRequest(senderId);
+            switch (type) {
+                case "location":
+                    reclamacaoRepository('localizacao', message.attachments.payload);
+                    askForMoreInfo(senderId);
+                    break;
+                default:       
+                    weirdRequest(senderId);
+            }    
         }
     }
 }
@@ -403,38 +398,14 @@ function askForLocation(senderId){
     showTypingThenSend(senderId,true,()=>{
 
         message = {
-            text: 'Escolha a forma mais conveniente de informar o local',
-            quick_replies:[{    
-                content_type:"text",
-                title: "Enviar localização",
-                payload: "enviarLocalizacao"
-            },{    
-                content_type:"text",
-                title: "Infomar Rua ou CEP",
-                payload: "informarLocalizacao"
-            }]  
-        };
-        sendMessage(senderId, message);
-    });
-}
-
-function showSendLocation(senderId){
-    step = 'enviarLocalizacao';
-
-        message = {
-            text: 'Compartilhe sua localização ?',
+            text: 'O mapa já vem sua localização selecionada, mas caso você deseje outro local é so clicar na \'lupa\' e pesquisar o endereço que deseja',
             quick_replies:[{    
                 content_type:"location",
             }]  
         };
-    
-    sendMessage(senderId, message);
-}
-
-function showInformLocation(senderId){
-    step = 'informarLocalizacao';
-
-    sendMessage(senderId, {text: "Por favor informe o CEP ou a Rua"});
+        
+        sendMessage(senderId, message);
+    });
 }
 
 function mensagemAgradecimento(senderId){
