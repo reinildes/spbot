@@ -156,7 +156,9 @@ function processMessage(event) {
                     askForSugestion(senderId);
                     break;
                 case "sugestao":
-                    reclamacaoRepository('sugestao', formattedMsg);
+                    if(['não', 'nao'].indexOf(formattedMsg) = -1){
+                        reclamacaoRepository('sugestao', formattedMsg);
+                    }    
                     mensagemAgradecimento(senderId);
                     break;
                 default:
@@ -321,7 +323,7 @@ function askForDate(senderId){
 
 function askForMidia(senderId){
     step = 'midia';
-    sendMessage(senderId, {text: "Beleza! Você tem um vídeo ou foto do ocorrido? Envie um vídeo ou responda 'Não' caso não queira enviar vídeo"});
+    sendMessage(senderId, {text: "Beleza! Você tem um vídeo ou foto do ocorrido? Envie um vídeo ou responda 'Não' caso prefira não enviar"});
 }
 
 function saveMedia(senderId, imageUrl){
@@ -340,19 +342,7 @@ function askForMoreInfo(senderId){
     step = 'pessoais';
     sendMessage(senderId, {text: "Obrigado! Já recebi aqui a sua reclamação!"});
     showTypingThenSend(senderId, true, () =>{
-        message = {
-            text: 'Para fins estatísticos, você gostaria de contribuir compartilhando algumas informações pessoais ?',
-            quick_replies:[{    
-            content_type:"text",
-            title: "Sim",
-            payload: "sim",
-            image_url: serverUrl+"img?img=yes.png&time="+new Date()*1
-        },{    
-            content_type:"text",
-            title: "Não",
-            payload: "nao",
-            image_url: serverUrl+"img?img=no.png&time="+new Date()*1
-        }]};
+        message = yesNoQuestion('Para fins estatísticos, você gostaria de contribuir compartilhando algumas informações pessoais ?');
         sendMessage(senderId, message);
     });
 }
@@ -420,7 +410,7 @@ function askForSexOrientation(senderId){
 
 function askForSugestion(senderId){
     step = 'sugestao';
-    sendMessage(senderId, {text: "Você gostaria de nos deixar alguma sugestão ?"});
+    sendMessage(senderId, {text:'Você gostaria de deixar alguma sugestão ou comentário? Escreva a sugestão ou digite \'Não\' para pular esta etapa'});
 }
 
 function askForLocation(senderId){
@@ -485,6 +475,23 @@ function mensagemAgradecimento(senderId){
         sendMessage(senderId, message);
     });
     reclamacaoDummyDB.push(reclamacao);
+}
+
+function yesNoQuestion(text){
+    return
+    message = {
+        text: text,
+        quick_replies:[{    
+        content_type:"text",
+        title: "Sim",
+        payload: "sim",
+        image_url: serverUrl+"img?img=yes.png&time="+new Date()*1
+    },{    
+        content_type:"text",
+        title: "Não",
+        payload: "nao",
+        image_url: serverUrl+"img?img=no.png&time="+new Date()*1
+    }]};
 }
 
 function formatDate(date){
