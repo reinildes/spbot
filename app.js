@@ -401,7 +401,7 @@ function askForAge(senderId){
                         payload: "menor que 18"         
                       }
                     ]
-                  },
+                  },{
                   title: "Classic T-Shirt Collection",                    
                   image_url: serverUrl+"img?img=lixo.png&time="+new Date()*1,          
                   buttons: [
