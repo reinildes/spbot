@@ -156,7 +156,7 @@ function processMessage(event) {
                     askForSugestion(senderId);
                     break;
                 case "sugestao":
-                    if(['não', 'nao'].indexOf(formattedMsg) = -1){
+                    if(['não', 'nao'].indexOf(formattedMsg) == -1){
                         reclamacaoRepository('sugestao', formattedMsg);
                     }    
                     mensagemAgradecimento(senderId);
