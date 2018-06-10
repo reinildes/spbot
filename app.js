@@ -171,8 +171,8 @@ function processMessage(event) {
         } else if (message.attachments) {
             var type = step;
             switch (type) {
-                case "informarlocalizacao":
-                case "enviarlocalizacao":
+                case "informarLocalizacao":
+                case "enviarLocalizacao":
                     reclamacaoRepository('localizacao', message.attachments[0].payload);
                     askForMoreInfo(senderId);
                     break;
