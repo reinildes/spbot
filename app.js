@@ -328,7 +328,7 @@ function saveMedia(senderId, data){
     fs.writeFile(__dirname+fileName, data, function (err) {
         if (err) throw err;
         console.log('Salvo!');
-        reclamacaoReposistory('fileName', fileName);
+        reclamacaoRepository('fileName', fileName);
     });
 }
 
