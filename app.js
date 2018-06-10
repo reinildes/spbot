@@ -450,6 +450,21 @@ function mensagemAgradecimento(senderId){
     sendMessage(senderId, {text: "Pronto! Já salvei tudo aqui"});
     showTypingThenSend(senderId, true, ()=>{
         sendMessage(senderId, {text: "Muito obrigado pelo seu tempo! O planeta agradece"});
+        message = {
+            attachment: {
+              type: "template",
+              payload: {
+                 template_type: "media",
+                 elements: [
+                    {
+                       media_type: "image",
+                       url: serverUrl+"img?earthday.png&time="+new Date()*1
+                    }
+                 ]
+              }
+            }    
+          };
+        sendMessage(senderId, message);
     });
     reclamacaoDummyDB.push(reclamacao);
 }
