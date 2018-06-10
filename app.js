@@ -301,17 +301,15 @@ function askForDate(senderId){
     step = 'data';
     var daysArray = [];
 
-    for(var i = 0; i <= 4; i++){
+    for(var i = 0; i <= 9; i++){
         var date = new Date();
         var newDate = new Date(date.setDate(date.getDate()-i));
         var dateFormatted = formatDate(newDate);
-        console.log(dateFormatted);
-        console.log(newDate);
         var aDay = {    
             content_type:"text",
             title: dateFormatted,
             payload: dateFormatted,
-         //   image_url: serverUrl+"img?img=cal.png"
+            image_url: serverUrl+"img?img=cal.png&time="+new Date()*1
         };
         daysArray.push(aDay);  
     }
@@ -447,6 +445,7 @@ function showInformLocation(senderId){
     
 
 function mensagemAgradecimento(senderId){
+    step = null;
     sendMessage(senderId, {text: "Pronto! Já salvei tudo aqui."});
     showTypingThenSend(senderId, true, ()=>{
         sendMessage(senderId, {text: "Muito obrigado pelo seu tempo! O planeta agradece."});
