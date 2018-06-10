@@ -92,8 +92,8 @@ function processMessage(event) {
         console.log("Received message from senderId: " + senderId);
         console.log("Message is: " + JSON.stringify(message));
 
-        console.log('type');
-            console.log(type);
+        console.log('step');
+        console.log(step);
 
         // You may get a text or attachment but not both
         if (message.text) {
@@ -160,7 +160,7 @@ function processMessage(event) {
             var type = step;
             switch (type) {
                 case "localizacao":
-                    reclamacaoRepository('localizacao', message.attachments.payload);
+                    reclamacaoRepository('localizacao', message.attachments[0].payload);
                     askForMoreInfo(senderId);
                     break;
                 default:       
