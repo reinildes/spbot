@@ -215,11 +215,11 @@ function getUserName( senderId){
 function mensagemDeBoasVindas(senderId){
     step = null;
     reclamacao = {};
-    var msg = 'Olá '+getUserName(senderId) + ', sua contribuição é muito importante para nós!';
+    var msg = 'Oi '+getUserName(senderId) + ', sua contribuição é muito importante para nós!';
     sendMessage(senderId, {text: msg});
 
     showTypingThenSend(senderId, true, () => {
-        sendMessage(senderId, {text: "Por favor escolha entre as categorias abaixo"});
+        sendMessage(senderId, {text: "Por favor escolha entre as categorias abaixo:"});
         displayCategories(senderId);    
     });
 }
@@ -232,6 +232,14 @@ function displayCategories(userId){
                 template_type: "generic",
                 image_aspect_ratio:"square",
                 elements: [{
+                        title: "Desperdício de água",                   
+                        image_url: serverUrl+"img?img=desperdicio.png&time="+new Date()*1,
+                        buttons: [{
+                            type: "postback",
+                            title: "Fazer Reclamação",
+                            payload: "desperdicio"
+                        }]
+                    },{
                     title: "Corte indevido de árvores",                  
                     image_url: serverUrl+"img?img=desmatamento.png&time="+new Date()*1,
                     buttons: [{
@@ -246,14 +254,6 @@ function displayCategories(userId){
                         type: "postback",
                         title: "Fazer Reclamação",
                         payload: "lixo"
-                    }]
-                },{
-                    title: "Desperdício de água",                   
-                    image_url: serverUrl+"img?img=desperdicio.png&time="+new Date()*1,
-                    buttons: [{
-                        type: "postback",
-                        title: "Fazer Reclamação",
-                        payload: "desperdicio"
                     }]
                 },{
                     title: "Maltrato de animais",                   
@@ -272,7 +272,6 @@ function displayCategories(userId){
                         payload: "queimadas"
                     }]
                 }
-            
             ]
             }
         }
@@ -282,12 +281,12 @@ function displayCategories(userId){
 
 function askForTitle(senderId){
     step = 'titulo';
-    sendMessage(senderId, {text: "Hummm... E que título você daria para essa reclamação?"});
+    sendMessage(senderId, {text: "Beleza! E que título você daria para essa reclamação?"});
 }
 
 function askForHistory(senderId){
     step = 'historia';
-    sendMessage(senderId, {text: "Okay... Nos conte sua história"});
+    sendMessage(senderId, {text: "Okay.. Me conte sua história"});
 }
 
 function askForDate(senderId){
@@ -308,7 +307,7 @@ function askForDate(senderId){
     }
 
     message = {
-        text: 'Humm, E quando foi que isso aconteceu ?',
+        text: 'Humm... E quando foi que isso aconteceu ?',
         quick_replies: daysArray  
     };
     sendMessage(senderId, message);
@@ -316,15 +315,15 @@ function askForDate(senderId){
 
 function askForMidia(senderId){
     step = 'midia';
-    sendMessage(senderId, {text: "Beleza... Você tem algum vídeo ou foto que evidencie o ocorrido?"});
+    sendMessage(senderId, {text: "Beleza... Você tem algum vídeo ou foto que evidencie o ocorrido ?"});
 }
 
 function askForMoreInfo(senderId){
     step = 'pessoais';
-    sendMessage(senderId, {text: "Obrigado! Já recebemos sua reclamação"});
+    sendMessage(senderId, {text: "Obrigado! Já recebi aqui a sua reclamação!"});
     showTypingThenSend(senderId, true, () =>{
         message = {
-            text: 'Para fins estatísticos, você gostaria de compartilhar algumas informações pessoais ?',
+            text: 'Para fins estatísticos, você gostaria de contribuir compartilhando algumas informações pessoais ?',
             quick_replies:[{    
             content_type:"text",
             title: "Sim",
@@ -412,14 +411,14 @@ function askForLocation(senderId){
     showTypingThenSend(senderId,true,()=>{
 
         message = {
-            text:  'Escolha a forma mais conveniente de informar o local',
+            text:  'Escolha a forma que achar mais conveniente de informar o local',
             quick_replies:[{    
                 content_type:"text",
                 title: "Enviar localização",
                 payload: "enviarLocalizacao"
             },{
                 content_type:"text",
-                title: "Infomar Rua ou CEP",
+                title: "Digitar endereço",
                 payload: "informarLocalizacao"
             }]  
         };
@@ -432,7 +431,7 @@ function showSendLocation(senderId){
     step = 'enviarLocalizacao';
 
         message = {
-            text: 'Compartilhe sua localização ?',
+            text: 'Por favor compartilhe sua localização',
             quick_replies:[{
                 content_type:"location",
             }]
@@ -443,14 +442,14 @@ function showSendLocation(senderId){
 
 function showInformLocation(senderId){
     step = 'informarLocalizacao';
-    sendMessage(senderId, {text: "Por favor informe o CEP ou a Rua"});
+    sendMessage(senderId, {text: "Por favor informe a rua ou CEP onde isso ocorreu"});
 }
     
 function mensagemAgradecimento(senderId){
     step = null;
-    sendMessage(senderId, {text: "Pronto! Já salvei tudo aqui."});
+    sendMessage(senderId, {text: "Pronto! Já salvei tudo aqui"});
     showTypingThenSend(senderId, true, ()=>{
-        sendMessage(senderId, {text: "Muito obrigado pelo seu tempo! O planeta agradece."});
+        sendMessage(senderId, {text: "Muito obrigado pelo seu tempo! O planeta agradece"});
     });
     reclamacaoDummyDB.push(reclamacao);
 }
@@ -500,7 +499,7 @@ function showTypingThenSend(senderId, onOff, doCallback){
 }
 
 function weirdRequest(senderId){
-    sendMessage(senderId, {text: "Humm... Não te entendi o que você disse..."});
+    sendMessage(senderId, {text: "Me desculpe, não consigo te entender"});
     showTypingThenSend(senderId, true, () => {
         sendMessage(senderId, {text: "Por favor, tente novamente ou digite 'Começar' para voltar ao começo"})
     });
