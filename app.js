@@ -347,7 +347,7 @@ function askForMoreInfo(senderId){
     });
 }
 
-function askForAgfe(senderId){
+function askForAge(senderId){
     step = 'idade';
     sendMessage(senderId, {text: "Então vamos lá!"});
     showTypingThenSend(senderId, true, ()=>{
@@ -356,23 +356,28 @@ function askForAgfe(senderId){
             quick_replies:[{    
                 content_type:"text",
                 title: "Menor que 18 anos",
-                payload: "menor que 18 anos"
+                payload: "menor que 18 anos",
+                image_url: serverUrl+"img?img=homem1.png&time="+new Date()*1
             },{    
                 content_type:"text",
                 title: "Entre 18 e 30 anos",
-                payload: "entre 18 e 30 anos"
+                payload: "entre 18 e 30 anos",
+                image_url: serverUrl+"img?img=homem2.png&time="+new Date()*1
             },{    
                 content_type:"text",
                 title: "Entre 30 e 50 anos",
-                payload: "entre 30 e 50 anos"
+                payload: "entre 30 e 50 anos",
+                image_url: serverUrl+"img?img=homem4.png&time="+new Date()*1
             },{    
                 content_type:"text",
                 title: "Entre 50 e 70 anos",
-                payload: "entre 50 e 70 anos"
+                payload: "entre 50 e 70 anos",
+                image_url: serverUrl+"img?img=homem5.png&time="+new Date()*1
             },{    
                 content_type:"text",
                 title: "Mais de 70 anos",
-                payload: "mais que 70 anos"
+                payload: "mais que 70 anos",
+                image_url: serverUrl+"img?img=homem6.png&time="+new Date()*1
             }]  
         };
         sendMessage(senderId, message);
@@ -380,7 +385,7 @@ function askForAgfe(senderId){
 }
 
 
-function askForAge(senderId){
+function askForAgeList(senderId){
     step = 'idade';
     sendMessage(senderId, {text: "Então vamos lá!"});
     showTypingThenSend(senderId, true, ()=>{
