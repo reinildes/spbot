@@ -128,11 +128,9 @@ function processMessage(event) {
                     askForLocation(senderId);
                     break;    
                 case "localizacao":
-                console.log('message.quick_reply.payload');
-                console.log(message.quick_reply.payload);
-                    if(formattedMsg =='informarlocalizacao'){
+                    if(message.quick_reply.payload =='informarLocalizacao'){
                         showInformLocation(senderId);
-                    }else if(formattedMsg =='enviarlocalizacao'){
+                    }else if(message.quick_reply.payload =='enviarLocalizacao'){
                         showSendLocation(senderId);
                     }
                     break;      
