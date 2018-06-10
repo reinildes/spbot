@@ -101,7 +101,6 @@ function processMessage(event) {
         // You may get a text or attachment but not both
         if (message.text) {
             var formattedMsg = message.text.toLowerCase().trim();
-            var type = step == null ? formattedMsg : step;
             
             if(formattedMsg =="começar"||formattedMsg=="comecar"){
                 mensagemDeBoasVindas(senderId);
@@ -114,7 +113,7 @@ function processMessage(event) {
             console.log(message.payload);
     
             //keywords that will trigger different responses
-            switch (type) {
+            switch (step) {
                 case "comecar":
                     mensagemDeBoasVindas(senderId);
                     break;
