@@ -10,8 +10,10 @@ app.listen((process.env.PORT || 5000));
 
 var name = null;
 const serverUrl = "https://raychat.herokuapp.com/";
-var reclamacao = new Map();
+var reclamacao = {};
+var reclamacaoDummyDB = [];
 var step = null;
+const months = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 
 // Server index page
 app.get("/", function (req, res) {
@@ -28,7 +30,7 @@ app.get("/webhook", function (req, res) {
     }
 });
 
- app.get("/img", function(req, res){
+app.get("/img", function(req, res){
     var img = req.query.img;
     res.sendFile("./"+img, {root: __dirname+'/img/'});
 });
@@ -101,7 +103,6 @@ function processMessage(event) {
             var type = step == null ? formattedMsg : step;
             
             if(formattedMsg =="começar"||formattedMsg=="comecar"){
-                step = null;
                 mensagemDeBoasVindas(senderId);
                 return;
             }
@@ -220,7 +221,8 @@ function getUserName( senderId){
 }
 
 function mensagemDeBoasVindas(senderId){
-    
+    step = null;
+    reclamacao = null;
     var msg = 'Olá '+getUserName(senderId) + ', sua contribuição é muito importante para nós!';
     sendMessage(senderId, {text: msg});
 
@@ -493,21 +495,20 @@ function showInformLocation(senderId){
     sendMessage(senderId, {text: "Por favor informe o CEP ou a Rua"});
 }
     
-
 function mensagemAgradecimento(senderId){
     step = null;
     sendMessage(senderId, {text: "Pronto! Já salvei tudo aqui."});
     showTypingThenSend(senderId, true, ()=>{
         sendMessage(senderId, {text: "Muito obrigado pelo seu tempo! O planeta agradece."});
     });
+    reclamacaoDummyDB.push(reclamacao);
 }
 
 function formatDate(date){
-    const months = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
     return date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear();
 }
 
-function reclamacaoRepository(key, value){
+function reclamacaoReposistory(key, value){
     if(reclamacao.get('id') == null ){
         reclamacao.set('id', new Date()*1);
     }
@@ -515,6 +516,15 @@ function reclamacaoRepository(key, value){
     console.log('reclamacaoRepository');
     console.log(reclamacao);
     return reclamacao;
+}
+
+function reclamacaoRepository(key, value){
+   if(reclamacao.id == null) {
+       reclamacao.id = new Date()*1;
+   }
+   reclamacao[key] = value;
+   console.log('reclamacaoRepository');
+   console.log(reclamacao);
 }
 
 function showTypingThenSend(senderId, onOff, doCallback){
@@ -544,3 +554,8 @@ function weirdRequest(senderId){
         sendMessage(senderId, {text: "Por favor, tente novamente ou digite 'Começar' para voltar ao começo"})
     });
 }
+
+app.get("/db", function(req, res){
+    var jsonRes = JSON.stringify(reclamacaoDummyDB);
+    res.json(jsonRes);
+});
