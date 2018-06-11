@@ -579,7 +579,7 @@ function mysqlRepository(reclamacao){
     var con = getConnection();
     var sql = 'INSERT IGNORE INTO usuario (user_id_fb, genre, age, first_name)'
                 +' VALUES ('+reclamacao.userId+','+reclamacao.sexo+','+reclamacao.idade+','+reclamacao.name+');';
-    runSqlCommand(con) ;
+    runSqlCommand(con, sql) ;
 
     var localStr = null;
     var lat = null;
@@ -594,15 +594,15 @@ function mysqlRepository(reclamacao){
        
     var sql = 'INSERT INTO endereco (endereco, latitude, longitude)'
                 +' VALUES ('+localStr+','+lat+','+long+');';
-    runSqlCommand(con) ;
+    runSqlCommand(con, sql) ;
 
     var sql = 'INSERT INTO denuncias (id_usu,id_categoria,titulo,historia, data,anexo,localizacao,sugestao, pessoal)'
                 +' VALUES ('+reclamacao.userId+',1,'+reclamacao.titulo+','+reclamacao.historia+','+reclamacao.data+',1'+reclamacao.sugestao+','+reclamacao.pessoal+');';
-    runSqlCommand(con) ;
+    runSqlCommand(con, sql) ;
     
 }
 
-function runSqlCommand(con){
+function runSqlCommand(con, sql){
     con.query(sql, 
         function (err, result) {
         if (err) throw err;
