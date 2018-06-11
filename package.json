@@ -15,6 +15,7 @@
     "mongoose": "^4.6.2",
     "request": "^2.75.0",
     "xmlhttprequest": "^1.8.0",
-    "mysql": "^2.5.4"
+    "mysql": "^2.5.4",
+    "ftp-client": "^0.2.2"
   }
 }

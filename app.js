@@ -4,6 +4,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var bodyParser = require("body-parser");
 var fs = require('fs');
 var mysql = require('mysql');
+var ftpClient = require('ftp-client');
 
 var app = express();
 app.use(bodyParser.urlencoded({extended: false}));
@@ -335,6 +336,7 @@ function saveMedia(senderId, imageUrl){
             if (err) throw err;
             console.log('File salved!');
             reclamacaoRepository('fileName', fileName);
+            uploadViaFtp(fileName);
         }); 
     });
 }
@@ -575,10 +577,32 @@ app.get("/mysql", function(req, res){
 });
 
 app.get("/test", function(req, res){
-    //var reclamacao = 
-    mysqlRepository(reclamacao);
+  
+   
 });
 
+function uploadViaFtp(fileName){
+    config = {
+        host: 'ftp.urto.com.br',
+        port: 21,
+        user: 'gregorio@domeuplanetacuidoeu.criaacao.art.br',
+        password: process.env.DB_PASSWORD
+    },
+    options = {
+        logging: 'basic'
+    },
+    client = new ftpClient(config, options);
+ 
+    client.connect(function () {
+    
+        client.upload([__dirname+fileName], '/', {
+            baseDir: __dirname+'/img/',
+            overwrite: 'older'
+        }, function (result) {
+            console.log(result);
+        });
+    });
+}
 
 function mysqlRepository(reclamacao){
     var con = getConnection();
@@ -604,7 +628,6 @@ function mysqlRepository(reclamacao){
     var sql = 'INSERT INTO denuncias (id_usu, id_categoria, titulo, historia, data, anexo, localizacao, sugestao, pessoal)'
                 +' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);';
     runSqlCommand(con, sql, [reclamacao.userId, 1, reclamacao.titulo,reclamacao.historia,reclamacao.data, reclamacao.fileName, 1, reclamacao.sugestao,reclamacao.pessoal]) ;
-    
 }
 
 function runSqlCommand(con, sql, pars){
