@@ -578,8 +578,8 @@ app.get("/mysql", function(req, res){
 function mysqlRepository(reclamacao){
     var con = getConnection();
     var sql = 'INSERT IGNORE INTO usuario (user_id_fb, genre, age, first_name)'
-                +' VALUES ('+reclamacao.userId+','+reclamacao.sexo+','+reclamacao.idade+','+reclamacao.name+');';
-    runSqlCommand(con, sql) ;
+                +' VALUES (?, ?, ?, ?);';
+    runSqlCommand(con, sql,[reclamacao.userId,reclamacao.sexo,reclamacao.idade,reclamacao.name]) ;
 
     var localStr = null;
     var lat = null;
@@ -602,8 +602,8 @@ function mysqlRepository(reclamacao){
     
 }
 
-function runSqlCommand(con, sql){
-    con.query(sql, 
+function runSqlCommand(con, sql, pars){
+    con.query(sql, pars, 
         function (err, result) {
         if (err) throw err;
         console.log("1 record inserted");  
