@@ -598,12 +598,12 @@ function mysqlRepository(reclamacao){
     }
        
     var sql = 'INSERT INTO endereco (endereco, latitude, longitude)'
-                +' VALUES ('+localStr+','+lat+','+long+');';
-    runSqlCommand(con, sql) ;
+                +' VALUES (?, ?, ?);';
+    runSqlCommand(con, sql, [localStr, lat, long]) ;
 
     var sql = 'INSERT INTO denuncias (id_usu,id_categoria,titulo,historia, data,anexo,localizacao,sugestao, pessoal)'
-                +' VALUES ('+reclamacao.userId+',1,'+reclamacao.titulo+','+reclamacao.historia+','+reclamacao.data+',1'+reclamacao.sugestao+','+reclamacao.pessoal+');';
-    runSqlCommand(con, sql) ;
+                +' VALUES (?, 1, ?, ?, ?, ?, 1, ?, ?);';
+    runSqlCommand(con, sql, [reclamacao.userId,reclamacao.titulo,reclamacao.historia,reclamacao.data,reclamacao.sugestao,reclamacao.pessoal]) ;
     
 }
 
