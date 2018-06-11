@@ -3,6 +3,7 @@ var request = require("request");
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var bodyParser = require("body-parser");
 var fs = require('fs');
+var mysql = require('mysql');
 
 var app = express();
 app.use(bodyParser.urlencoded({extended: false}));
@@ -169,11 +170,9 @@ function processMessage(event) {
             switch (type) {
                 case "enviarLocalizacao":
                     reclamacaoRepository('localizacao', message.attachments[0].payload);
-                    //askForMoreInfo(senderId);
                     askForMidia(senderId);
                     break;
                 case "midia":
-                    //reclamacaoRepository('midia', message.attachments[0].payload);
                     saveMedia(senderId, message.attachments[0].payload.url);
                     askForMoreInfo(senderId);
                     break;    
@@ -209,20 +208,22 @@ function getUserName( senderId){
     var r = new XMLHttpRequest();
     r.open('GET', "https://graph.facebook.com/v2.6/" + senderId 
          +"?access_token="+ process.env.PAGE_ACCESS_TOKEN
-         +"&fields=first_name",
+         +"&fields=first_name,email",
           false);           
     r.send(null);
 
     if (r.status === 200) {
         name = JSON.parse(r.responseText).first_name;
     }
-    reclamacaoRepository('userId', senderId);    
     return name;   
 }
 
 function mensagemDeBoasVindas(senderId){
     step = null;
     reclamacao = {};
+    reclamacaoRepository('userId', senderId);  
+    reclamacaoRepository('name', getUserName(senderId)); 
+
     var msg = 'Oi '+getUserName(senderId) + ', sua contribuição é muito importante para nós!';
     sendMessage(senderId, {text: msg});
 
@@ -264,7 +265,7 @@ function displayCategories(userId){
                         payload: "lixo"
                     }]
                 },{
-                    title: "Maltrato de animais",                   
+                    title: "Maltrato de animais",
                     image_url: serverUrl+"img?img=maltrato.png&time="+new Date()*1,
                     buttons: [{
                         type: "postback",
@@ -475,6 +476,7 @@ function mensagemAgradecimento(senderId){
         sendMessage(senderId, message);
     });
     reclamacaoDummyDB.push(reclamacao);
+    mysqlRepository(reclamacao);
 }
 
 function yesNoQuestion(text){
@@ -548,3 +550,78 @@ function weirdRequest(senderId){
 app.get("/db", function(req, res){
     res.json(reclamacaoDummyDB);
 });
+
+var result = null;
+app.get("/mysql", function(req, res){
+    
+    var con = getConnection();
+    con.query('SELECT * from usuario', function(err, rows, fields) {
+        if (!err){
+            console.log('Resultado: ', rows);
+            result = rows;
+        }
+        else
+          console.log('Error while performing Query.');
+    });
+    con.end();
+        
+    console.log("result");
+
+    while(result==null){
+        console.log(result);
+    }
+    
+    res.send(result);
+    
+});
+
+function mysqlRepository(reclamacao){
+    var con = getConnection();
+    var sql = 'INSERT IGNORE INTO usuario (user_id_fb, genre, age, first_name)'
+                +' VALUES ('+reclamacao.userId+','+reclamacao.sexo+','+reclamacao.idade+','+reclamacao.name+');';
+    runSqlCommand(con) ;
+
+    var localStr = null;
+    var lat = null;
+    var long = null;
+
+    if(reclamacao.localizacao.coordinates != null){
+        lat = reclamacao.localizacao.coordinates.lat;
+        long = reclamacao.localizacao.coordinates.long;
+    }else{
+        localStr = reclamacao.localizacao;
+    }
+       
+    var sql = 'INSERT INTO endereco (endereco, latitude, longitude)'
+                +' VALUES ('+localStr+','+lat+','+long+');';
+    runSqlCommand(con) ;
+
+    var sql = 'INSERT INTO denuncias (id_usu,id_categoria,titulo,historia, data,anexo,localizacao,sugestao, pessoal)'
+                +' VALUES ('+reclamacao.userId+',1,'+reclamacao.titulo+','+reclamacao.historia+','+reclamacao.data+',1'+reclamacao.sugestao+','+reclamacao.pessoal+');';
+    runSqlCommand(con) ;
+    
+}
+
+function runSqlCommand(con){
+    con.query(sql, 
+        function (err, result) {
+        if (err) throw err;
+        console.log("1 record inserted");  
+    });
+}
+
+function getConnection(){
+    
+    var con = mysql.createConnection({
+        host: "criaacao.art.br",
+        user: "urtoc153_greg",
+        password: process.env.DB_PASSWORD,
+        database: "urtoc153_domeuplanetacuidoeu"
+      });
+      
+    con.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected!");
+    });
+    return con;
+}
