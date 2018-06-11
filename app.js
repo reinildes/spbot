@@ -601,9 +601,9 @@ function mysqlRepository(reclamacao){
                 +' VALUES (?, ?, ?);';
     runSqlCommand(con, sql, [localStr, lat, long]) ;
 
-    var sql = 'INSERT INTO denuncias (id_usu,id_categoria,titulo,historia, data,anexo,localizacao,sugestao, pessoal)'
-                +' VALUES (?, 1, ?, ?, ?, ?, 1, ?, ?);';
-    runSqlCommand(con, sql, [reclamacao.userId,reclamacao.titulo,reclamacao.historia,reclamacao.data,reclamacao.sugestao,reclamacao.pessoal]) ;
+    var sql = 'INSERT INTO denuncias (id_usu, id_categoria, titulo, historia, data, anexo, localizacao, sugestao, pessoal)'
+                +' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);';
+    runSqlCommand(con, sql, [reclamacao.userId, 1, reclamacao.titulo,reclamacao.historia,reclamacao.data, reclamacao.fileName, 1, reclamacao.sugestao,reclamacao.pessoal]) ;
     
 }
 
