@@ -239,7 +239,7 @@ function displayCategories(userId){
             type: "template",
             payload: {
                 template_type: "generic",
-                image_aspect_ratio:"square",
+                image_aspect_ratio:"horizontal",
                 elements: [{
                         title: "Desperdício de água",                   
                         image_url: serverUrl+"img?img=desperdicio.png&time="+new Date()*1,
