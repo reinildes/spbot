@@ -547,9 +547,8 @@ function weirdRequest(senderId){
     });
 }
 
-app.get("/db", function(req, res){
-    res.json(reclamacaoDummyDB);
-});
+
+
 
 var result = null;
 app.get("/mysql", function(req, res){
@@ -575,9 +574,15 @@ app.get("/mysql", function(req, res){
     
 });
 
+app.get("/test", function(req, res){
+    //var reclamacao = 
+    mysqlRepository(reclamacao);
+});
+
+
 function mysqlRepository(reclamacao){
     var con = getConnection();
-    var sql = 'INSERT IGNORE INTO usuario (user_id_fb, genre, age, first_name)'
+    var sql = 'INSERT IGNORE INTO usuario (user_id_fb, genre, age, firstname)'
                 +' VALUES (?, ?, ?, ?);';
     runSqlCommand(con, sql,[reclamacao.userId,reclamacao.sexo,reclamacao.idade,reclamacao.name]) ;
 
