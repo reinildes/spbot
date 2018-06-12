@@ -240,13 +240,13 @@ function displayCategories(userId){
                 template_type: "generic",
                 image_aspect_ratio:"square",
                 elements: [{
-                        title: "Desperdício de água",                   
-                        image_url: serverUrl+"img?img=desperdicio.png&time="+new Date()*1,
-                        buttons: [{
-                            type: "postback",
-                            title: "Fazer Reclamação",
-                            payload: "desperdicio"
-                        }]
+                    title: "Desperdício de água",                   
+                    image_url: serverUrl+"img?img=desperdicio.png&time="+new Date()*1,
+                    buttons: [{
+                        type: "postback",
+                        title: "Fazer Reclamação",
+                        payload: "desperdicio"
+                    }]
                     },{
                     title: "Corte indevido de árvores",                  
                     image_url: serverUrl+"img?img=desmatamento.png&time="+new Date()*1,
@@ -546,33 +546,17 @@ function weirdRequest(senderId){
     });
 }
 
-var result = null;
 app.get("/mysql", function(req, res){
     
     var con = getConnection();
-    con.query('SELECT * from usuario', function(err, rows, fields) {
+    con.query('SELECT * from denuncias', function(err, rows, fields) {
         if (!err){
-            console.log('Resultado: ', rows);
-            result = rows;
+            res.send(rows);
         }
         else
           console.log('Error while performing Query.');
     });
-    
-    console.log("result");
-
-    while(result==null){
-        console.log(result);
-    }
     con.end();
-    
-    res.send(result);
-    
-});
-
-app.get("/test", function(req, res){
-  
-   
 });
 
 function uploadViaFtp(fileName){
@@ -627,8 +611,8 @@ function mysqlRepository(reclamacao){
 function runSqlCommand(con, sql, pars){
     con.query(sql, pars, 
         function (err, result) {
-        if (err) throw err;
-        console.log("1 record inserted");  
+            if (err) throw err;
+            console.log("1 record inserted");  
     });
 }
 
