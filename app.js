@@ -240,7 +240,7 @@ function displayCategories(userId){
             type: "template",
             payload: {
                 template_type: "generic",
-                image_aspect_ratio:"horizontal",
+                image_aspect_ratio:"square",
                 elements: [{
                         title: "Desperdício de água",                   
                         image_url: serverUrl+"img?img=desperdicio.png&time="+new Date()*1,
@@ -649,7 +649,7 @@ function getConnection(){
       
     con.connect(function(err) {
     if (err) throw err;
-    console.log("Connected!");
+        console.log("Connected!");
     });
     return con;
 }
