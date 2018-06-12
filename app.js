@@ -219,8 +219,8 @@ function getUserName( senderId){
 }
 
 function mensagemDeBoasVindas(senderId){
-    setStep(null, senderId);
     reclamacaoRepository('name', getUserName(senderId), senderId); 
+    setStep(null, senderId);
 
     var msg = 'Oi '+getUserName(senderId) + ', sua contribuição é muito importante para nós!';
     sendMessage(senderId, {text: msg});
@@ -523,8 +523,8 @@ function reclamacaoRepository(key, value, senderId){
    console.log(reclamacaoMap.get(senderId).reclamacao);
 }
 
-function setStep(senderId, step){
-    reclamacaoMap.get(senderId).reclamacao.step = step;
+function setStep(step, senderId){
+    reclamacaoMap.get(senderId).step = step;
 }
 
 function showTypingThenSend(senderId, onOff, doCallback){
