@@ -219,7 +219,7 @@ function getUserName( senderId){
 }
 
 function mensagemDeBoasVindas(senderId){
-    reclamacaoMap.get(senderId) = null;
+    reclamacaoMap.set(senderId, null);
     reclamacaoRepository('name', getUserName(senderId), senderId); 
     setStep(null, senderId);
 
