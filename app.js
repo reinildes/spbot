@@ -87,7 +87,7 @@ function processMessage(event) {
     if (!event.message.is_echo) {
         var message = event.message;
         var senderId = event.sender.id;
-        var step = reclamacaoMap.get(senderId).step;
+        var step = reclamacaoMap.get(senderId).step==null?'':reclamacaoMap.get(senderId).step;
 
         console.log("Received message from senderId: " + senderId);
         console.log("Message is: " + JSON.stringify(message));
