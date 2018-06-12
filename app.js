@@ -201,8 +201,8 @@ function sendMessage(recipientId, message) {
 
 function getUserName( senderId){
 
-    if (reclamacaoMap.get(senderId).reclamacao.name != null){
-        return name;
+    if (reclamacaoMap.get(senderId) != null){
+        return reclamacaoMap.get(senderId).reclamacao.name;
     }
 
     var r = new XMLHttpRequest();
