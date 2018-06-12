@@ -219,6 +219,7 @@ function getUserName( senderId){
 }
 
 function mensagemDeBoasVindas(senderId){
+    reclamacaoMap.get(senderId) = null;
     reclamacaoRepository('name', getUserName(senderId), senderId); 
     setStep(null, senderId);
 
@@ -500,16 +501,6 @@ function formatDate(date){
     return date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear();
 }
 
-// function reclamacaoReposistory(key, value){
-//     if(reclamacao.get('id') == null ){
-//         reclamacao.set('id', new Date()*1);
-//     }
-//     reclamacao.set(key,value);
-//     console.log('reclamacaoRepository');
-//     console.log(reclamacao);
-//     return reclamacao;
-// }
-
 function reclamacaoRepository(key, value, senderId){
 
    if(reclamacaoMap.get(senderId) == null) {
@@ -567,13 +558,13 @@ app.get("/mysql", function(req, res){
         else
           console.log('Error while performing Query.');
     });
-    con.end();
-        
+    
     console.log("result");
 
     while(result==null){
         console.log(result);
     }
+    con.end();
     
     res.send(result);
     
