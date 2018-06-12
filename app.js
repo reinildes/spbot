@@ -10,14 +10,12 @@ var app = express();
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.listen((process.env.PORT || 5000));
+app.set('json spaces', 2);
 
 var name = null;
 const serverUrl = "https://raychat.herokuapp.com/";
-var reclamacao = {};
-var reclamacaoDummyDB = [];
-var step = null;
+var reclamacaoMap = {};
 const months = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
-app.set('json spaces', 2);
 
 // Server index page
 app.get("/", function (req, res) {
@@ -77,7 +75,7 @@ function processPostback(event) {
         case "lixo":
         case "maltrato":
         case "queimadas":
-            reclamacaoRepository('tipo', formattedMsg);
+            reclamacaoRepository('tipo', formattedMsg, senderId);
             askForTitle(senderId);
             break;
         default:
@@ -89,6 +87,7 @@ function processMessage(event) {
     if (!event.message.is_echo) {
         var message = event.message;
         var senderId = event.sender.id;
+        var step = reclamacaoMap.get(senderId).step;
 
         console.log("Received message from senderId: " + senderId);
         console.log("Message is: " + JSON.stringify(message));
@@ -112,15 +111,15 @@ function processMessage(event) {
     
             switch (step) {
                 case "titulo":
-                    reclamacaoRepository('titulo', formattedMsg);
+                    reclamacaoRepository('titulo', formattedMsg, senderId);
                     askForHistory(senderId);
                     break;
                 case "historia":
-                    reclamacaoRepository('historia', formattedMsg);
+                    reclamacaoRepository('historia', formattedMsg, senderId);
                     askForDate(senderId);
                     break;    
                 case "data":
-                    reclamacaoRepository('data', formattedMsg);
+                    reclamacaoRepository('data', formattedMsg, senderId);
                     askForLocation(senderId);
                     break;
                 case "localizacao":
@@ -131,7 +130,7 @@ function processMessage(event) {
                     }
                     break;
                 case "informarLocalizacao":
-                    reclamacaoRepository('localizacao', formattedMsg);
+                    reclamacaoRepository('localizacao', formattedMsg, senderId);
                     askForMidia(senderId);
                     break;
                 case "midia":
@@ -142,7 +141,7 @@ function processMessage(event) {
                     }
                     break;    
                 case "pessoais":
-                    reclamacaoRepository('pessoal', formattedMsg);
+                    reclamacaoRepository('pessoal', formattedMsg, senderId);
                     if(formattedMsg=="sim"){
                         askForAge(senderId);
                     }else{
@@ -150,16 +149,16 @@ function processMessage(event) {
                     }
                     break;  
                 case "idade":
-                    reclamacaoRepository('idade', formattedMsg);
+                    reclamacaoRepository('idade', formattedMsg, senderId);
                     askForSexOrientation(senderId);
                     break;
                 case "sexo":
-                    reclamacaoRepository('sexo', formattedMsg);
+                    reclamacaoRepository('sexo', formattedMsg, senderId);
                     askForSugestion(senderId);
                     break;
                 case "sugestao":
                     if(['não', 'nao'].indexOf(formattedMsg) == -1){
-                        reclamacaoRepository('sugestao', formattedMsg);
+                        reclamacaoRepository('sugestao', formattedMsg, senderId);
                     }    
                     mensagemAgradecimento(senderId);
                     break;
@@ -170,7 +169,7 @@ function processMessage(event) {
             var type = step;
             switch (type) {
                 case "enviarLocalizacao":
-                    reclamacaoRepository('localizacao', message.attachments[0].payload);
+                    reclamacaoRepository('localizacao', message.attachments[0].payload, senderId);
                     askForMidia(senderId);
                     break;
                 case "midia":
@@ -202,14 +201,14 @@ function sendMessage(recipientId, message) {
 
 function getUserName( senderId){
 
-    if (name != null){
+    if (reclamacaoMap.get(senderId).reclamacao.name != null){
         return name;
     }
 
     var r = new XMLHttpRequest();
     r.open('GET', "https://graph.facebook.com/v2.6/" + senderId 
          +"?access_token="+ process.env.PAGE_ACCESS_TOKEN
-         +"&fields=first_name,email",
+         +"&fields=first_name",
           false);           
     r.send(null);
 
@@ -220,10 +219,8 @@ function getUserName( senderId){
 }
 
 function mensagemDeBoasVindas(senderId){
-    step = null;
-    reclamacao = {};
-    reclamacaoRepository('userId', senderId);  
-    reclamacaoRepository('name', getUserName(senderId)); 
+    setStep(null, senderId);
+    reclamacaoRepository('name', getUserName(senderId), senderId); 
 
     var msg = 'Oi '+getUserName(senderId) + ', sua contribuição é muito importante para nós!';
     sendMessage(senderId, {text: msg});
@@ -290,17 +287,17 @@ function displayCategories(userId){
 }
 
 function askForTitle(senderId){
-    step = 'titulo';
+    setStep('titulo', senderId);
     sendMessage(senderId, {text: "Beleza! E que título você daria para essa reclamação?"});
 }
 
 function askForHistory(senderId){
-    step = 'historia';
+    setStep('historia', senderId);
     sendMessage(senderId, {text: "Okay.. Me conte sua história"});
 }
 
 function askForDate(senderId){
-    step = 'data';
+    setStep('data', senderId);
     var daysArray = [];
 
     for(var i = 0; i <= 9; i++){
@@ -324,7 +321,7 @@ function askForDate(senderId){
 }
 
 function askForMidia(senderId){
-    step = 'midia';
+    setStep('midia', senderId);
     sendMessage(senderId, {text: "Beleza! Você tem um vídeo ou foto do ocorrido? Envie um arquivo ou responda 'Não' caso deseje não enviar"});
 }
 
@@ -335,14 +332,14 @@ function saveMedia(senderId, imageUrl){
         fs.writeFile(__dirname+fileName, body, 'binary', function(err) {
             if (err) throw err;
             console.log('File salved!');
-            reclamacaoRepository('fileName', fileName);
+            reclamacaoRepository('fileName', fileName, senderId);
             uploadViaFtp(fileName);
         }); 
     });
 }
 
 function askForMoreInfo(senderId){
-    step = 'pessoais';
+    setStep('pessoais', senderId);
     sendMessage(senderId, {text: "Obrigado! Já recebi aqui a sua reclamação!"});
     showTypingThenSend(senderId, true, () =>{
         message = yesNoQuestion('Para fins estatísticos, você gostaria de contribuir compartilhando algumas informações pessoais ?');
@@ -351,7 +348,7 @@ function askForMoreInfo(senderId){
 }
 
 function askForAge(senderId){
-    step = 'idade';
+    setStep('idade', senderId);
     sendMessage(senderId, {text: "Então vamos lá!"});
     showTypingThenSend(senderId, true, ()=>{
         message = {
@@ -388,7 +385,7 @@ function askForAge(senderId){
 }
 
 function askForSexOrientation(senderId){
-    step = 'sexo';
+    setStep('sexo', senderId);
     message = {
         text: 'Qual a sua orientação sexual ?',
         quick_replies:[{    
@@ -412,12 +409,12 @@ function askForSexOrientation(senderId){
 }
 
 function askForSugestion(senderId){
-    step = 'sugestao';
+    setStep('sugestao', senderId);
     sendMessage(senderId, {text:'Você gostaria de deixar alguma sugestão ou comentário? Escreva a sugestão ou digite \'Não\' para pular esta etapa'});
 }
 
 function askForLocation(senderId){
-    step = 'localizacao';
+    setStep('localizacao', senderId);
     sendMessage(senderId, {text: "E em que local isso aconteceu ?"});
     showTypingThenSend(senderId,true,()=>{
 
@@ -439,25 +436,26 @@ function askForLocation(senderId){
 }
 
 function showSendLocation(senderId){
-    step = 'enviarLocalizacao';
+   
+    setStep('enviarLocalizacao', senderId);
 
-        message = {
-            text: 'Por favor compartilhe sua localização',
-            quick_replies:[{
-                content_type:"location",
-            }]
-        };
+    message = {
+        text: 'Por favor compartilhe sua localização',
+        quick_replies:[{
+            content_type:"location",
+        }]
+    };
 
     sendMessage(senderId, message);
 }
 
 function showInformLocation(senderId){
-    step = 'informarLocalizacao';
+    setStep('informarLocalizacao', senderId);
     sendMessage(senderId, {text: "Por favor informe a rua ou CEP onde isso ocorreu"});
 }
     
 function mensagemAgradecimento(senderId){
-    step = null;
+    setStep(null, senderId);
     sendMessage(senderId, {text: "Pronto! Já salvei tudo aqui"});
     showTypingThenSend(senderId, true, ()=>{
         sendMessage(senderId, {text: "Muito obrigado pelo seu tempo! O planeta agradece"});
@@ -477,8 +475,8 @@ function mensagemAgradecimento(senderId){
           };
         sendMessage(senderId, message);
     });
-    reclamacaoDummyDB.push(reclamacao);
-    mysqlRepository(reclamacao);
+    
+    mysqlRepository(reclamacaoMap.get(senderId).reclamacao);
 }
 
 function yesNoQuestion(text){
@@ -502,23 +500,31 @@ function formatDate(date){
     return date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear();
 }
 
-function reclamacaoReposistory(key, value){
-    if(reclamacao.get('id') == null ){
-        reclamacao.set('id', new Date()*1);
+// function reclamacaoReposistory(key, value){
+//     if(reclamacao.get('id') == null ){
+//         reclamacao.set('id', new Date()*1);
+//     }
+//     reclamacao.set(key,value);
+//     console.log('reclamacaoRepository');
+//     console.log(reclamacao);
+//     return reclamacao;
+// }
+
+function reclamacaoRepository(key, value, senderId){
+
+   if(reclamacaoMap.get(senderId) == null) {
+        reclamacaoMap.set(senderId, {step: 'comeco', reclamacao: {}});
+        reclamacaoMap.get(senderId).reclamacao.userId = senderId;
+        reclamacaoMap.get(senderId).reclamacao.id = new Date()*1;
     }
-    reclamacao.set(key,value);
-    console.log('reclamacaoRepository');
-    console.log(reclamacao);
-    return reclamacao;
+   
+   reclamacaoMap.get(senderId).reclamacao[key] = value;
+   console.log('reclamacaoRepository');
+   console.log(reclamacaoMap.get(senderId).reclamacao);
 }
 
-function reclamacaoRepository(key, value){
-   if(reclamacao.id == null) {
-       reclamacao.id = new Date()*1;
-   }
-   reclamacao[key] = value;
-   console.log('reclamacaoRepository');
-   console.log(reclamacao);
+function setStep(senderId, step){
+    reclamacaoMap.get(senderId).reclamacao.step = step;
 }
 
 function showTypingThenSend(senderId, onOff, doCallback){
@@ -548,9 +554,6 @@ function weirdRequest(senderId){
         sendMessage(senderId, {text: "Por favor, tente novamente ou digite 'Começar' para voltar ao começo"})
     });
 }
-
-
-
 
 var result = null;
 app.get("/mysql", function(req, res){
