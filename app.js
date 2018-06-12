@@ -14,7 +14,7 @@ app.set('json spaces', 2);
 
 var name = null;
 const serverUrl = "https://raychat.herokuapp.com/";
-var reclamacaoMap = {};
+var reclamacaoMap = new Map();
 const months = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 
 // Server index page
